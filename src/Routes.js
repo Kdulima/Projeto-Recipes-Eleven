@@ -1,14 +1,13 @@
 import React from 'react';
-
-// import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+// import Login from './pages/Login';
 
 export default function Routes() {
   return (
-    // <BrowserRouter>
-    //   <Route path="/" component={} />
-    // </BrowserRouter>
-    <span>
-      oi
-    </span>
+    <BrowserRouter>
+      <Switch>
+        {/* <Route exact path="/" component={ Login } /> */}
+      </Switch>
+    </BrowserRouter>
   );
 }
