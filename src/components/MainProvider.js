@@ -1,12 +1,8 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import mainContext from '../contexts/mainContext';
 
-const INITIAL_MAIN_STATE = {
-  whatever: 1,
-};
-export const mainContext = createContext(INITIAL_MAIN_STATE);
-
-export function MainProvider({ children }) {
+export default function MainProvider({ children }) {
   return (
     <mainContext.Provider value={ mainContext }>
       {children}
