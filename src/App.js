@@ -4,7 +4,7 @@ import { BsFillDice6Fill } from 'react-icons/bs';
 import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Routes from './Routes';
-import { MainProvider } from './components/MainProvider';
+import MainProvider from './components/MainProvider';
 
 function App() {
   return (
