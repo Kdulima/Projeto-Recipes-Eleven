@@ -13,7 +13,6 @@ const validateEmail = (email) => {
 const validatePassword = (password) => {
   const MIN_PASSWORD_LENGTH = 6;
   if (password.length > MIN_PASSWORD_LENGTH) {
-    console.log(password);
     return true;
   }
   return false;
