@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import mainContext from '../contexts/mainContext';
+import mainContext from './mainContext';
 
 export default function MainProvider({ children }) {
   const [pageName, setPageName] = useState('');
