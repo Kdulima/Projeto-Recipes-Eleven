@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import mainContext from '../contexts/mainContext';
 
 export default function MainProvider({ children }) {
+  const [pageName, setPageName] = useState('');
+
+  const contextValue = {
+    ...mainContext,
+    pageName,
+    setPageName,
+  };
+
   return (
-    <mainContext.Provider value={ mainContext }>
+    <mainContext.Provider value={ contextValue }>
       {children}
     </mainContext.Provider>
   );
