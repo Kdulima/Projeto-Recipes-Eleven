@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Header from '../../components/Header';
 import RecipesList from './components/RecipesList';
 import CategoryFilters from './components/CategoryFilters';
 
@@ -11,18 +12,20 @@ const renderRecipeList = () => (
 );
 
 const selectProviderByRecipeType = (recipeType) => {
-  if (recipeType === 'Meal') {
-    return (
-      <MealProvider>
-        {renderRecipeList()}
-      </MealProvider>
-    );
-  }
-  return (
-    <DrinkProvider>
-      {renderRecipeList()}
-    </DrinkProvider>
-  );
+  // if (recipeType === 'Meal') {
+  //   return (
+  //     <MealProvider>
+  //       {renderRecipeList()}
+  //     </MealProvider>
+  //   );
+  // }
+  // return (
+  //   <DrinkProvider>
+  //     {renderRecipeList()}
+  //   </DrinkProvider>
+  // );
+  console.log(recipeType);
+  return renderRecipeList();
 };
 
 export default function List({ history }) {
@@ -30,7 +33,7 @@ export default function List({ history }) {
   const recipeType = pathname === '/comidas' ? 'Meal' : 'Drink';
   return (
     <>
-      <span>header</span>
+      <Header />
       {selectProviderByRecipeType(recipeType)}
       <span>footer</span>
     </>

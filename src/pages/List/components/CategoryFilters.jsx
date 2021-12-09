@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import mainContext from '../../../contexts/mainContext';
 
 const AMOUNT_OF_FILTERS = 5;
+const { mealsCategories } = require('../mealCategories');
 
-function CategoryFilters({ categories }) {
+console.log(mealsCategories);
+
+function CategoryFilters() {
   const { setCategoryToFilter } = useContext(mainContext);
   return (
     <div>
@@ -15,7 +17,7 @@ function CategoryFilters({ categories }) {
         value="All"
         onClick={ () => setCategoryToFilter('') }
       />
-      {categories.map((category, index) => (
+      {mealsCategories.map((category, index) => (
         index < AMOUNT_OF_FILTERS ? (
           <Button
             key={ index }
@@ -32,8 +34,8 @@ function CategoryFilters({ categories }) {
 
 export default CategoryFilters;
 
-CategoryFilters.propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.shape({
-    strCategory: PropTypes.string.isRequired,
-  })).isRequired,
-};
+// CategoryFilters.propTypes = {
+//   categories: PropTypes.arrayOf(PropTypes.shape({
+//     strCategory: PropTypes.string.isRequired,
+//   })).isRequired,
+// };
