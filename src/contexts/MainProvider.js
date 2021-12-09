@@ -6,7 +6,6 @@ export default function MainProvider({ children }) {
   const [pageName, setPageName] = useState('');
 
   const contextValue = {
-    ...mainContext,
     pageName,
     setPageName,
   };
