@@ -1,5 +1,10 @@
 import React from 'react';
+import DefaultLayout from '../components/DefaultLayout';
 
 export default function DrinkInProgress() {
-  return (<p>xablau</p>);
+  return (
+    <DefaultLayout pathname="receitas-favoritas">
+      <p>Favoritos - Esconde footer</p>
+    </DefaultLayout>
+  );
 }
