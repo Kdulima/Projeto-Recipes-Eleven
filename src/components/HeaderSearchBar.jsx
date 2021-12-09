@@ -1,58 +1,35 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import mainContext from '../contexts/mainContext';
 
 export default function HeaderSearchBar(props) {
   const { isVisible } = props;
-  const { setRecipesBy, requestRecipes } = useContext(mainContext);
+  const { recipesBy, setRecipesBy, requestRecipes } = useContext(mainContext);
   const [state, setstate] = useState('');
   const [value, setvalue] = useState('');
 
-  // const ingredientRadio = document.getElementById('ingredient');
-  // const nameRadio = document.getElementById('name');
-  // const firstLetterRadio = document.getElementById('firstLetter');
-  // const userSearchInput = document.getElementById('userSearchInput');
-
-  const handleFirstLetterInput = (userSearchInputValue) => {
-    if (userSearchInputValue.length > 1) {
-      return global.alert('Sua busca deve conter somente 1 (um) caracter');
-    }
-  };
-
-  // const handleRecipesFetch = () => {
-  //   if (ingredientRadio.checked) {
-  //     setRecipesBy({
-  //       searchType: ingredientRadio.value,
-  //       searchInput: userSearchInput.value,
-  //     });
-  //   }
-  //   if (nameRadio.checked) {
-  //     setRecipesBy({
-  //       searchType: nameRadio.value,
-  //       searchInput: userSearchInput.value,
-  //     });
-  //   }
-  //   if (firstLetterRadio.checked) {
-  //     handleFirstLetterInput(userSearchInput.value);
-  //     setRecipesBy({
-  //       searchType: firstLetterRadio.value,
-  //       searchInput: userSearchInput.value,
-  //     });
+  // const handleFirstLetterInput = (userSearchInputValue) => {
+  //   if (userSearchInputValue.length > 1) {
+  //     return global.alert('Sua busca deve conter somente 1 (um) caracter');
   //   }
   // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (state === 'firstLetter') {
-      handleFirstLetterInput(value);
-      return;
+    if (state === 'firstLetter' && value.length > 1) {
+      return global.alert('Sua busca deve conter somente 1 (um) caracter');
+      // handleFirstLetterInput(value);
+      // return;
     }
     await setRecipesBy({
       searchType: state,
       searchInput: value,
     });
-    requestRecipes();
   };
+
+  useEffect(() => {
+    requestRecipes();
+  }, [recipesBy]);
 
   return (isVisible) && (
     <form onSubmit={ (event) => handleSubmit(event) }>

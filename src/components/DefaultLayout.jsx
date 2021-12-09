@@ -7,17 +7,25 @@ import { getPageName } from '../helpers';
 import mainContext from '../contexts/mainContext';
 
 export default function DefaultLayout({ children, pathname = '' }) {
-  const { setPageName } = useContext(mainContext);
+  const { setPageName, setRecipesType } = useContext(mainContext);
   const [isFooterVisible, setIsFooterVisible] = useState(true);
 
   useEffect(() => {
     getPageName(pathname, setPageName);
 
+    if (pathname.includes('comida')) {
+      setRecipesType('meals');
+    }
+
+    if (pathname.includes('bebida')) {
+      setRecipesType('drinks');
+    }
+
     const routesToHideFooter = ['receitas-feitas', 'receitas-favoritas'];
     if (routesToHideFooter.includes(pathname)) {
       setIsFooterVisible(false);
     }
-  }, [pathname, setPageName]);
+  }, [pathname, setPageName, setRecipesType]);
 
   return (
     <>

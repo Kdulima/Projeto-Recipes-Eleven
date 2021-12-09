@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import mainContext from './mainContext';
 import {
@@ -11,40 +11,35 @@ export default function MainProvider({ children }) {
   const [pageName, setPageName] = useState('');
   const [isFetching, setIsFetching] = useState(false);
   const [recipes, setRecipes] = useState([]);
-  const [recipesType, setRecipesType] = useState('meals');
+  const [recipesType, setRecipesType] = useState('');
   const [recipesBy, setRecipesBy] = useState({ searchType: '', searchInput: '' }); // aqui dependeria de qual radio estaria marcado
 
-  useEffect(() => {
-    async function requestRecipes() {
-      console.log(recipesBy);
-      setIsFetching(true);
-      let response;
+  async function requestRecipes() {
+    setIsFetching(true);
+    let response;
 
-      switch (recipesBy.searchType) {
-      case 'ingredient':
-        response = await getRecipesByIngredient(recipesBy.searchInput, recipesType);
-        setRecipes(response);
-        setIsFetching(false);
-        break;
-      case 'name':
-        response = await getRecipesByName(recipesBy.searchInput, recipesType);
-        setRecipes(response);
-        setIsFetching(false);
-        break;
-      case 'firstLetter':
-        response = await getRecipesByFirstLetter(recipesBy.searchInput, recipesType);
-        setRecipes(response);
-        setIsFetching(false);
-        break;
-      default:
-        setRecipes(...recipes);
-        setIsFetching(false);
-        break;
-      }
-      console.log('fiz o fetch');
+    switch (recipesBy.searchType) {
+    case 'ingredient':
+      response = await getRecipesByIngredient(recipesBy.searchInput, recipesType);
+      setRecipes(response);
+      setIsFetching(false);
+      break;
+    case 'name':
+      response = await getRecipesByName(recipesBy.searchInput, recipesType);
+      setRecipes(response);
+      setIsFetching(false);
+      break;
+    case 'firstLetter':
+      response = await getRecipesByFirstLetter(recipesBy.searchInput, recipesType);
+      setRecipes(response);
+      setIsFetching(false);
+      break;
+    default:
+      setIsFetching(false);
+      break;
     }
-    requestRecipes();
-  }, [recipesBy]);
+    console.log('fiz o fetch');
+  }
 
   return (
     <mainContext.Provider
