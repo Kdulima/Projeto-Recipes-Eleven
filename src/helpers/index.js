@@ -5,12 +5,12 @@ export function capitalize(string) {
 }
 
 export function handleHeaderName(string) {
-  const test1 = string === 'explorar bebidas ingredientes';
-  const test2 = string === 'explorar comidas ingredientes';
-  const test3 = string === 'explorar comidas area';
+  const isExploreDrinks = string === 'explorar bebidas ingredientes';
+  const isExploreFoods = string === 'explorar comidas ingredientes';
+  const isExploreOrigin = string === 'explorar comidas area';
 
-  if (test1 || test2) return 'Explorar Ingredientes';
-  if (test3) return 'Explorar Origem';
+  if (isExploreDrinks || isExploreFoods) return 'Explorar Ingredientes';
+  if (isExploreOrigin) return 'Explorar Origem';
 
   return string;
 }
