@@ -1,10 +1,10 @@
 import React from 'react';
-import LayoutDefault from '../components/LayoutDefaut';
+import DefaultLayout from '../components/DefaultLayout';
 
 export default function Ingredients() {
   return (
-    <LayoutDefault>
+    <DefaultLayout pathname="/explorar/comidas/ingredientes">
       <h1>Drinks</h1>
-    </LayoutDefault>
+    </DefaultLayout>
   );
 }
