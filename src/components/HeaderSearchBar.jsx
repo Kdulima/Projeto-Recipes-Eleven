@@ -1,38 +1,56 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import mainContext from '../contexts/mainContext';
 
 export default function HeaderSearchBar(props) {
   const { isVisible } = props;
-  const { recipesBy, setRecipesBy, requestRecipes } = useContext(mainContext);
+  const {
+    recipesType, recipes, recipesBy, setRecipesBy, requestRecipes,
+  } = useContext(mainContext);
   const [state, setstate] = useState('');
   const [value, setvalue] = useState('');
 
-  // const handleFirstLetterInput = (userSearchInputValue) => {
-  //   if (userSearchInputValue.length > 1) {
-  //     return global.alert('Sua busca deve conter somente 1 (um) caracter');
-  //   }
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (state === 'firstLetter' && value.length > 1) {
       return global.alert('Sua busca deve conter somente 1 (um) caracter');
-      // handleFirstLetterInput(value);
-      // return;
     }
+
     await setRecipesBy({
       searchType: state,
       searchInput: value,
     });
   };
 
+  const handleRedirection = async () => {
+    if (recipes.length === 0) {
+      return global.alert(
+        'Sinto muito, não encontramos nenhuma receita para esses filtros',
+      );
+    }
+
+    if (recipes.length === 1 && recipesType === 'meals') {
+      // <Redirect to={`/comidas/${recipes[0].idMeal}`} />
+
+      history.push(`/comidas/${recipes[0].idMeal}`);
+    }
+
+    if (recipes.length === 1 && recipesType === 'drinks') {
+      history.push(`/bebidas/${recipes[0].idDrink}`);
+    }
+  };
+
   useEffect(() => {
     requestRecipes();
+    // handleRedirection();
   }, [recipesBy]);
 
   return (isVisible) && (
-    <form onSubmit={ (event) => handleSubmit(event) }>
+    <form
+      onSubmit={ (event) => { handleSubmit(event); handleRedirection(); } }
+    >
       <input
         type="text"
         data-testid="search-input"
@@ -79,4 +97,5 @@ export default function HeaderSearchBar(props) {
 
 HeaderSearchBar.propTypes = ({
   isVisible: PropTypes.bool.isRequired,
+  history: PropTypes.string.isRequired,
 });
