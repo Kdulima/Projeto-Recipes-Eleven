@@ -2,15 +2,11 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Login from './pages/Login';
-import Foods from './pages/Foods';
-import Drinks from './pages/Drinks';
+import List from './pages/List/List';
 import RecipeDetails from './pages/RecipeDetails';
-import DrinkDetails from './pages/DrinkDetails';
-import FoodInProgress from './pages/FoodInProgress';
-import DrinkInProgress from './pages/DrinkInProgress';
+import RecipeInProgress from './pages/RecipeInProgres';
 import Explore from './pages/Explore';
-import ExploreFoods from './pages/ExploreFoods';
-import ExploreDrinks from './pages/ExploreDrinks';
+import ExploreRecipes from './pages/ExploreRecipes';
 import Ingredients from './pages/Ingredients';
 import ExploreArea from './pages/ExploreArea';
 import Profile from './pages/Profile';
@@ -22,15 +18,15 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/comidas" component={ Foods } />
-        <Route exact path="/bebidas" component={ Drinks } />
+        <Route exact path="/comidas" component={ List } />
+        <Route exact path="/bebidas" component={ List } />
         <Route path="/comidas/:id" component={ RecipeDetails } />
-        <Route path="/bebidas/:id" component={ DrinkDetails } />
-        <Route path="/comidas/:id/in-progress" component={ FoodInProgress } />
-        <Route path="/bebidas/:id/in-progress" component={ DrinkInProgress } />
+        <Route path="/bebidas/:id" component={ RecipeDetails } />
+        <Route path="/comidas/:id/in-progress" component={ RecipeInProgress } />
+        <Route path="/bebidas/:id/in-progress" component={ RecipeInProgress } />
         <Route exact path="/explorar" component={ Explore } />
-        <Route exact path="/explorar/comidas" component={ ExploreFoods } />
-        <Route exact path="/explorar/bebidas" component={ ExploreDrinks } />
+        <Route exact path="/explorar/comidas" component={ ExploreRecipes } />
+        <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />
         <Route path="/explorar/comidas/ingredientes" component={ Ingredients } />
         <Route path="/explorar/bebidas/ingredientes" component={ Ingredients } />
         <Route path="/explorar/comidas/area" component={ ExploreArea } />

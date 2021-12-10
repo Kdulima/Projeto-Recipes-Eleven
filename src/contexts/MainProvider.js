@@ -21,23 +21,23 @@ export default function MainProvider({ children }) {
     switch (recipesBy.searchType) {
     case 'ingredient':
       response = await getRecipesByIngredient(recipesBy.searchInput, recipesType);
-      setIsFetching(false);
       // Não tirei o setRecipes pois não sabia se iria quebrar outro lugar, mas na search bar eu usei o retorno dessa função e não o estado do contexto
       setRecipes(response);
+      setIsFetching(false);
       console.log('Fetch ingredientes');
-      return response;
+      break;
     case 'name':
       response = await getRecipesByName(recipesBy.searchInput, recipesType);
       setRecipes(response);
       setIsFetching(false);
       console.log('Fetch name');
-      return response;
+      break;
     case 'firstLetter':
       response = await getRecipesByFirstLetter(recipesBy.searchInput, recipesType);
       setRecipes(response);
       setIsFetching(false);
       console.log('Fetch primeira');
-      return response;
+      break;
     default:
       setIsFetching(false);
       break;
