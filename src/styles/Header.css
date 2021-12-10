@@ -1,13 +1,13 @@
 .header {
-  background: rgb(255,13,31);
-  background: linear-gradient(165deg, rgba(255,13,31,1) 13%, rgba(255,144,35,1) 70%);
+  background: rgb(255, 13, 31);
+  background: linear-gradient(165deg, rgba(255, 13, 31, 1) 13%, rgba(255, 144, 35, 1) 70%);
   border-radius: 0 0 10px 10px;
   min-height: 2rem;
 }
 
 .header-title {
-  margin-bottom: 0;
   color: white;
+  margin-bottom: 0;
 }
 
 .header button {
