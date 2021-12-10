@@ -17,11 +17,11 @@ function SearchBar() {
   //   setType(foodOrDrink);
   // } colocar essa chamada na página que tiver a escolha entre comida e bebida
 
-  const handleFirstLetterInput = (/* userSearchInput.value */) => {
-    if (/* userSearch-input.value */.length > 1) {
-      return global.alert('Sua busca deve conter somente 1 (um) caracter');
-    }
-  }
+//   const handleFirstLetterInput = (/* userSearchInput.value */) => {
+//     if (/* userSearch-input.value */.length > 1) {
+//       return global.alert('Sua busca deve conter somente 1 (um) caracter');
+//     }
+//   }
 
   const handleFoodFetch = () => {
     if (ingredientRadio.checked) {
