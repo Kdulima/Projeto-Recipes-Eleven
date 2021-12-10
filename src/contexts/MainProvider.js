@@ -15,30 +15,33 @@ export default function MainProvider({ children }) {
   const [recipesBy, setRecipesBy] = useState({ searchType: '', searchInput: '' }); // aqui dependeria de qual radio estaria marcado
 
   async function requestRecipes() {
+    console.log('opa');
     setIsFetching(true);
     let response;
-
     switch (recipesBy.searchType) {
     case 'ingredient':
       response = await getRecipesByIngredient(recipesBy.searchInput, recipesType);
-      setRecipes(response);
       setIsFetching(false);
-      break;
+      // Não tirei o setRecipes pois não sabia se iria quebrar outro lugar, mas na search bar eu usei o retorno dessa função e não o estado do contexto
+      setRecipes(response);
+      console.log('Fetch ingredientes');
+      return response;
     case 'name':
       response = await getRecipesByName(recipesBy.searchInput, recipesType);
       setRecipes(response);
       setIsFetching(false);
-      break;
+      console.log('Fetch name');
+      return response;
     case 'firstLetter':
       response = await getRecipesByFirstLetter(recipesBy.searchInput, recipesType);
       setRecipes(response);
       setIsFetching(false);
-      break;
+      console.log('Fetch primeira');
+      return response;
     default:
       setIsFetching(false);
       break;
     }
-    console.log('fiz o fetch');
   }
 
   return (
