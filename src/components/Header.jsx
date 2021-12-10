@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { Col, Container, Row } from 'react-bootstrap';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-
 import { capitalize, handleHeaderName } from '../helpers';
 import mainContext from '../contexts/mainContext';
-
 import HeaderSearchBar from './HeaderSearchBar';
 
 export default function Header() {

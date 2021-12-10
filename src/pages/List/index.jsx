@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Header from '../../components/Header';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import DefaultLayout from '../../components/DefaultLayout';
 import RecipesList from './components/RecipesList';
 import CategoryFilters from './components/CategoryFilters';
+import mainContext from '../../contexts/mainContext';
 
 const renderRecipeList = () => (
   <>
@@ -11,32 +13,25 @@ const renderRecipeList = () => (
   </>
 );
 
-const selectProviderByRecipeType = (recipeType) => {
-  // if (recipeType === 'Meal') {
-  //   return (
-  //     <MealProvider>
-  //       {renderRecipeList()}
-  //     </MealProvider>
-  //   );
-  // }
-  // return (
-  //   <DrinkProvider>
-  //     {renderRecipeList()}
-  //   </DrinkProvider>
-  // );
-  console.log(recipeType);
-  return renderRecipeList();
-};
+export default function List({ history: { location: { pathname } } }) {
+  const { recipes, recipesType, requestRecipes } = useContext(mainContext);
 
-export default function List({ history }) {
-  const { location: { pathname } } = history;
-  const recipeType = pathname === '/comidas' ? 'Meal' : 'Drink';
+  useEffect(() => {
+    requestRecipes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <>
-      <Header />
-      {selectProviderByRecipeType(recipeType)}
-      <span>footer</span>
-    </>
+    <DefaultLayout pathname={ pathname }>
+      {recipes && recipes.length === 1 && (
+        <Redirect
+          to={
+            `${pathname}/${recipes[0][`id${recipesType === 'meals' ? 'Meal' : 'Drink'}`]}`
+          }
+        />
+      )}
+      {recipes && recipes.length > 0 && renderRecipeList()}
+    </DefaultLayout>
   );
 }
 

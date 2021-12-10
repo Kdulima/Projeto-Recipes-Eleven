@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Collapse } from 'react-bootstrap';
 import mainContext from '../contexts/mainContext';
 
 export default function HeaderSearchBar(props) {
@@ -12,6 +13,7 @@ export default function HeaderSearchBar(props) {
 
   const [inputSearch, setInputSearch] = useState('');
   const [radioValue, setRadioValue] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,57 +26,64 @@ export default function HeaderSearchBar(props) {
   };
 
   useEffect(() => {
-    requestRecipes();
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) requestRecipes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipesBy]);
 
-  return (isVisible) && (
-    <form
-      onSubmit={ handleSubmit }
-    >
-      <input
-        type="text"
-        data-testid="search-input"
-        id="userSearchInput"
-        value={ inputSearch }
-        onChange={ (e) => setInputSearch(e.target.value) }
-      />
-
-      <label htmlFor="ingredient">
+  return (
+    <Collapse in={ isVisible } className="header">
+      <form
+        onSubmit={ handleSubmit }
+      >
         <input
-          data-testid="ingredient-search-radio"
-          name="search-type"
-          type="radio"
-          id="ingredient"
-          onChange={ (e) => setRadioValue(e.target.id) }
+          type="text"
+          data-testid="search-input"
+          id="userSearchInput"
+          value={ inputSearch }
+          onChange={ (e) => setInputSearch(e.target.value) }
         />
-        Ingrediente
-      </label>
 
-      <label htmlFor="name">
-        <input
-          data-testid="name-search-radio"
-          type="radio"
-          name="search-type"
-          id="name"
-          onChange={ (e) => setRadioValue(e.target.id) }
-        />
-        Nome
-      </label>
+        <label htmlFor="ingredient">
+          <input
+            data-testid="ingredient-search-radio"
+            name="search-type"
+            type="radio"
+            id="ingredient"
+            onChange={ (e) => setRadioValue(e.target.id) }
+          />
+          Ingrediente
+        </label>
 
-      <label htmlFor="firstLetter">
-        <input
-          data-testid="first-letter-search-radio"
-          type="radio"
-          name="search-type"
-          id="firstLetter"
-          onChange={ (e) => setRadioValue(e.target.id) }
-        />
-        Primeira letra
-      </label>
-      <button data-testid="exec-search-btn" type="submit">
-        buscar
-      </button>
-    </form>
+        <label htmlFor="name">
+          <input
+            data-testid="name-search-radio"
+            type="radio"
+            name="search-type"
+            id="name"
+            onChange={ (e) => setRadioValue(e.target.id) }
+          />
+          Nome
+        </label>
+
+        <label htmlFor="firstLetter">
+          <input
+            data-testid="first-letter-search-radio"
+            type="radio"
+            name="search-type"
+            id="firstLetter"
+            onChange={ (e) => setRadioValue(e.target.id) }
+          />
+          Primeira letra
+        </label>
+        <button data-testid="exec-search-btn" type="submit">
+          buscar
+        </button>
+      </form>
+    </Collapse>
   );
 }
 

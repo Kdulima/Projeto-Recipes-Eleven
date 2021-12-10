@@ -5,8 +5,6 @@ import mainContext from '../../../contexts/mainContext';
 const AMOUNT_OF_FILTERS = 5;
 const { mealsCategories } = require('../mealCategories');
 
-console.log(mealsCategories);
-
 function CategoryFilters() {
   const { setCategoryToFilter } = useContext(mainContext);
   return (
