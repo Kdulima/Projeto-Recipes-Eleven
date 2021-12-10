@@ -1,6 +1,5 @@
 .login-header {
-  background: rgb(255, 13, 31);
-  background: linear-gradient(165deg, rgba(255, 13, 31, 1) 13%, rgba(255, 144, 35, 1) 70%);
+  background: linear-gradient(165deg, rgb(255, 13, 31) 13%, rgb(255, 144, 35) 70%);
   color: white;
   display: flex;
   flex-direction: column;
@@ -26,7 +25,7 @@
 }
 
 .button {
-  background: linear-gradient(222deg, rgba(255, 13, 31, 1) 13%, rgba(255, 144, 35, 1) 70%);
+  background: linear-gradient(222deg, rgb(255, 13, 31) 13%, rgb(255, 144, 35) 70%);
   border: none;
   height: 4rem;
   margin: 0.5rem auto;
