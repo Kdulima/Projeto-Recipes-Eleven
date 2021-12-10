@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Col, Container, Row } from 'react-bootstrap';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
@@ -33,33 +34,38 @@ export default function Header() {
   }, [pageName]);
 
   return (
-    <header>
-      <div>
-        <Link to="/perfil">
-          <img
-            src={ profileIcon }
-            alt="Profile Icon"
-            data-testid="profile-top-btn"
-          />
-        </Link>
-
-        <span data-testid="page-title">{treatedPageName}</span>
-
-        {(isSearchVisible) && (
-          <button
-            type="button"
-            onClick={ () => setIsSearchBarVisible((prevState) => !prevState) }
-          >
+    <Container as="header" fluid className="header pt-2 pb-2">
+      <Row className="align-items-center">
+        <Col className="text-center">
+          <Link to="/perfil">
             <img
-              src={ searchIcon }
-              alt="Serch Icon"
-              data-testid="search-top-btn"
+              src={ profileIcon }
+              alt="Profile Icon"
+              data-testid="profile-top-btn"
             />
-          </button>
-        )}
-      </div>
-
-      <HeaderSearchBar isVisible={ isSearchBarVisible } />
-    </header>
+          </Link>
+        </Col>
+        <Col xs lg={ 8 } className="text-center">
+          <h2 data-testid="page-title" className="header-title">{treatedPageName}</h2>
+        </Col>
+        <Col className="text-center">
+          {(isSearchVisible) && (
+            <button
+              type="button"
+              onClick={ () => setIsSearchBarVisible((prevState) => !prevState) }
+            >
+              <img
+                src={ searchIcon }
+                alt="Serch Icon"
+                data-testid="search-top-btn"
+              />
+            </button>
+          )}
+        </Col>
+      </Row>
+      <Row>
+        <HeaderSearchBar isVisible={ isSearchBarVisible } />
+      </Row>
+    </Container>
   );
 }
