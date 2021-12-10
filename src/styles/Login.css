@@ -1,0 +1,33 @@
+.login-header {
+  background: linear-gradient(165deg, rgb(255, 13, 31) 13%, rgb(255, 144, 35) 70%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 28vh;
+  justify-content: center;
+  text-align: center;
+}
+
+.form {
+  height: 72vh;
+  padding-top: 6rem;
+}
+
+.input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 4rem;
+  margin: 1rem auto 0.5rem;
+  padding: 12px 20px;
+  width: 70%;
+}
+
+.button {
+  background: linear-gradient(222deg, rgb(255, 13, 31) 13%, rgb(255, 144, 35) 70%);
+  border: none;
+  height: 4rem;
+  margin: 0.5rem auto;
+  width: 70%;
+}

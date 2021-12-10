@@ -1,6 +1,8 @@
 import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/Login.css';
+import { Container, Row } from 'react-bootstrap';
 
 const validateEmail = (email) => {
   // Regex retirado do site: https://regexr.com
@@ -40,37 +42,49 @@ export default function Login({ history }) {
   };
 
   return (
-    <form onSubmit={ handleLogin }>
-      <label htmlFor="email">
-        Email
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={ email }
-          data-testid="email-input"
-          onChange={ (e) => setEmail(e.target.value) }
-        />
-      </label>
-      <label htmlFor="password">
-        Senha
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={ password }
-          data-testid="password-input"
-          onChange={ (e) => setPassword(e.target.value) }
-        />
-      </label>
-      <Button
-        as="input"
-        type="submit"
-        value="Entrar"
-        disabled={ isButtonDisabled }
-        data-testid="login-submit-btn"
-      />
-    </form>
+    <>
+      <header className="login-header">
+        <h1>Login</h1>
+      </header>
+      <Container fluid className="form">
+        <form onSubmit={ handleLogin }>
+          <Row fluid className="flex">
+            <input
+              className="input"
+              type="email"
+              id="email"
+              name="email"
+              value={ email }
+              data-testid="email-input"
+              placeholder="Email"
+              onChange={ (e) => setEmail(e.target.value) }
+            />
+          </Row>
+          <Row>
+            <input
+              className="input"
+              type="password"
+              id="password"
+              name="password"
+              value={ password }
+              data-testid="password-input"
+              placeholder="Senha"
+              onChange={ (e) => setPassword(e.target.value) }
+            />
+          </Row>
+          <Row>
+            <Button
+              className="button"
+              as="input"
+              type="submit"
+              value="Entrar"
+              disabled={ isButtonDisabled }
+              data-testid="login-submit-btn"
+            />
+          </Row>
+        </form>
+      </Container>
+    </>
   );
 }
 
