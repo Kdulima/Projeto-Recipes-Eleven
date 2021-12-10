@@ -8,9 +8,12 @@ describe('Tela de login', () => {
   let emailInput = null;
   let passwordInput = null;
   let loginSubmitBtn = null;
+  let globalHistory = {};
+  const validEmail = 'email@mail.com';
 
   beforeEach(() => {
-    renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />);
+    globalHistory = history;
     emailInput = screen.getByTestId('email-input');
     passwordInput = screen.getByTestId('password-input');
     loginSubmitBtn = screen.getByTestId('login-submit-btn');
@@ -23,10 +26,9 @@ describe('Tela de login', () => {
   });
 
   it('3 - A pessoa deve conseguir escrever o email no input de email', () => {
-    const expectText = 'email@email.com';
-    userEvent.type(emailInput, expectText);
+    userEvent.type(emailInput, validEmail);
 
-    expect(emailInput).toHaveValue(expectText);
+    expect(emailInput).toHaveValue(validEmail);
   });
 
   it('4 - A pessoa deve conseguir escrever a senha no input de senha', () => {
@@ -51,7 +53,7 @@ describe('Tela de login', () => {
     it('O botão é desativado se a senha tiver 6 caracteres ou menos', () => {
       expect(loginSubmitBtn.disabled).toBe(true);
 
-      userEvent.type(emailInput, 'email@mail.com');
+      userEvent.type(emailInput, validEmail);
       userEvent.type(passwordInput, '123456');
 
       expect(loginSubmitBtn.disabled).toBe(true);
@@ -69,5 +71,39 @@ describe('Tela de login', () => {
 
   it('6 - Salve mealsToken e cocktailsToken no localStorage após a submissão', () => {
     expect(loginSubmitBtn.disabled).toBe(true);
+
+    userEvent.type(emailInput, validEmail);
+    userEvent.type(passwordInput, '1234567');
+    userEvent.click(loginSubmitBtn);
+
+    const storageMeal = localStorage.getItem('mealsToken');
+    const storageCocktails = localStorage.getItem('cocktailsToken');
+
+    expect(storageMeal).toBe('1');
+    expect(storageCocktails).toBe('1');
+  });
+
+  it('7 - Salve o e-mail no localStorage na chave user, após a submissão', () => {
+    expect(loginSubmitBtn.disabled).toBe(true);
+
+    userEvent.type(emailInput, validEmail);
+    userEvent.type(passwordInput, '1234567');
+    userEvent.click(loginSubmitBtn);
+
+    const user = localStorage.getItem('user');
+    const { email } = JSON.parse(user);
+
+    expect(email).toBe(validEmail);
+  });
+
+  it('8 - Manda para a tela principal de receitas de comida após submissão', () => {
+    expect(loginSubmitBtn.disabled).toBe(true);
+
+    userEvent.type(emailInput, validEmail);
+    userEvent.type(passwordInput, '1234567');
+    userEvent.click(loginSubmitBtn);
+
+    const { location } = globalHistory;
+    expect(location.pathname).toBe('/comidas');
   });
 });
