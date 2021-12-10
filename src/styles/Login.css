@@ -1,34 +1,33 @@
 .login-header {
-  color:white;
-  height: 28vh;
-  background: rgb(255,13,31);
-  background: linear-gradient(165deg, rgba(255,13,31,1) 13%, rgba(255,144,35,1) 70%);
-  text-align: center;
+  background: linear-gradient(165deg, rgb(255, 13, 31) 13%, rgb(255, 144, 35) 70%);
+  color: white;
   display: flex;
   flex-direction: column;
+  height: 28vh;
   justify-content: center;
+  text-align: center;
 }
 
 .form {
-  padding-top: 6rem;
   height: 72vh;
+  padding-top: 6rem;
 }
 
 .input {
-  width: 70%;
-  height: 4rem;
-  padding: 12px 20px;
-  margin: 1rem auto .5rem;
-  display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  display: inline-block;
+  height: 4rem;
+  margin: 1rem auto 0.5rem;
+  padding: 12px 20px;
+  width: 70%;
 }
 
 .button {
-  background:linear-gradient(222deg, rgba(255,13,31,1) 13%, rgba(255,144,35,1) 70%);
+  background: linear-gradient(222deg, rgb(255, 13, 31) 13%, rgb(255, 144, 35) 70%);
   border: none;
-  width: 70%;
   height: 4rem;
-  margin: .5rem auto;
-} 
+  margin: 0.5rem auto;
+  width: 70%;
+}
