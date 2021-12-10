@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Footer from './Footer';
 import '../styles/Footer.css';
+import '../styles/Header.css';
 import Header from './Header';
 import { getPageName } from '../helpers';
 import mainContext from '../contexts/mainContext';

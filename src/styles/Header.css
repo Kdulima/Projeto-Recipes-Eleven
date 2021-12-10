@@ -1,0 +1,15 @@
+.header {
+  background: linear-gradient(165deg, rgb(255, 13, 31) 13%, rgb(255, 144, 35) 70%);
+  border-radius: 0 0 10px 10px;
+  min-height: 2rem;
+}
+
+.header-title {
+  color: white;
+  margin-bottom: 0;
+}
+
+.header button {
+  background: none;
+  border: none;
+}

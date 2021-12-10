@@ -3,7 +3,7 @@ import DefaultLayout from '../../components/DefaultLayout';
 
 export default function List() {
   return (
-    <DefaultLayout>
+    <DefaultLayout pathname="/comidas">
       xablau
     </DefaultLayout>
   );
