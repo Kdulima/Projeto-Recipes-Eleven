@@ -20,7 +20,5 @@ export default function RecipeCard({ index, recipe }) {
 
 RecipeCard.propTypes = {
   index: PropTypes.number.isRequired,
-  recipe: PropTypes.shape({
-
-  }).isRequired,
+  recipe: PropTypes.shape({}).isRequired,
 };

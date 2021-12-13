@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import DefaultLayout from '../../components/DefaultLayout';
@@ -6,23 +6,21 @@ import RecipesList from './components/RecipesList';
 import CategoryFilters from './components/CategoryFilters';
 import mainContext from '../../contexts/mainContext';
 
-const renderRecipeList = () => (
-  <>
-    <CategoryFilters />
-    <RecipesList />
-  </>
-);
-
 export default function List({ history: { location: { pathname } } }) {
   const { recipes, recipesType, requestRecipes } = useContext(mainContext);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    requestRecipes();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!isMounted) {
+      console.log('primeiro fetch(da lista)');
+      requestRecipes(undefined, 'drinks');
+      setIsMounted(true);
+    }
+  }, [isMounted, requestRecipes]);
 
   return (
     <DefaultLayout pathname={ pathname }>
+      {console.log('to montando a lista')}
       {recipes && recipes.length === 1 && (
         <Redirect
           to={
@@ -30,7 +28,12 @@ export default function List({ history: { location: { pathname } } }) {
           }
         />
       )}
-      {recipes && recipes.length > 0 && renderRecipeList()}
+      {recipes && recipes.length > 0 && (
+        <>
+          <CategoryFilters />
+          <RecipesList />
+        </>
+      )}
     </DefaultLayout>
   );
 }

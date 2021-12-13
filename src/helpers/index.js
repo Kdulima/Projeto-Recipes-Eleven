@@ -15,13 +15,16 @@ export function handleHeaderName(string) {
   return string;
 }
 
-export function getPageName(pathname, setPageName) {
+export function treatPathname(pathname) {
   const pageName = pathname
     .split('/')
     .join(' ')
     .split('-')
     .join(' ')
-    .trim();
+    .trim()
+    .split(' ')
+    .map((letters) => capitalize(letters))
+    .join(' ');
 
-  setPageName(pageName);
+  return pageName;
 }

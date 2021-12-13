@@ -5,15 +5,17 @@ import mainContext from '../contexts/mainContext';
 
 export default function HeaderSearchBar(props) {
   const { isVisible } = props;
-  const {
-    recipesBy,
-    setRecipesBy,
-    requestRecipes,
-  } = useContext(mainContext);
+  const { requestRecipes, recipesType } = useContext(mainContext);
 
   const [inputSearch, setInputSearch] = useState('');
   const [radioValue, setRadioValue] = useState('');
-  const [isMounted, setIsMounted] = useState(false);
+  const [recipesBy, setRecipesBy] = useState(undefined);
+
+  useEffect(() => {
+    console.log(recipesBy, recipesType);
+    requestRecipes(recipesBy, recipesType);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recipesBy]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,15 +26,6 @@ export default function HeaderSearchBar(props) {
 
     setRecipesBy({ searchType: radioValue, searchInput: inputSearch });
   };
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (isMounted) requestRecipes();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recipesBy]);
 
   return (
     <Collapse in={ isVisible } className="header">

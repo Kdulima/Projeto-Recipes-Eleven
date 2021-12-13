@@ -8,18 +8,14 @@ import {
 } from '../services/recipesAPI';
 
 export default function MainProvider({ children }) {
-  const [pageName, setPageName] = useState('');
   const [categoryToFilter, setCategoryToFilter] = useState('');
   const [isFetching, setIsFetching] = useState(false);
   const [recipes, setRecipes] = useState([]);
 
-  // aqui dependeria de qual radio estaria marcado
-  const [recipesBy, setRecipesBy] = useState({ searchType: 'name', searchInput: '' });
-
   //  recipesType sempre 'meals' ou 'drinks'
-  const [recipesType, setRecipesType] = useState('');
+  const [recipesType, setRecipesType] = useState('meals');
 
-  async function requestRecipes() {
+  async function requestRecipes(recipesBy = { searchType: 'name', searchInput: '' }) {
     setIsFetching(true);
     let response;
     switch (recipesBy.searchType) {
@@ -48,12 +44,8 @@ export default function MainProvider({ children }) {
   return (
     <mainContext.Provider
       value={ {
-        pageName,
-        setPageName,
         recipesType,
         setRecipesType,
-        recipesBy,
-        setRecipesBy,
         requestRecipes,
         isFetching,
         recipes,
