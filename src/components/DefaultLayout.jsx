@@ -12,7 +12,6 @@ export default function DefaultLayout({ children, pathname = '' }) {
   const { setRecipesType } = useContext(mainContext);
 
   const [isFooterVisible, setIsFooterVisible] = useState(true);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
   useEffect(() => {
     console.log('vousetar');
@@ -24,21 +23,20 @@ export default function DefaultLayout({ children, pathname = '' }) {
       setRecipesType('drinks');
       console.log('setei drinks');
     }
-  }, [pathname, setRecipesType]);
 
-  const routesToHideHeader = [];
-  if (routesToHideHeader.includes(pathname)) {
-    setIsHeaderVisible(false);
-  }
+    const routesToHideFooter = [
+      'Receitas Feitas',
+      'Receitas Favoritas',
+    ];
 
-  const routesToHideFooter = ['receitas-feitas', 'receitas-favoritas'];
-  if (routesToHideFooter.includes(pathname)) {
-    setIsFooterVisible(false);
-  }
+    if (routesToHideFooter.includes(pageName)) {
+      setIsFooterVisible(false);
+    }
+  }, [pathname, setRecipesType, pageName]);
 
   return (
     <>
-      {isHeaderVisible && <Header pageName={ pageName } />}
+      <Header pageName={ pageName } />
       <main>
         {children}
       </main>

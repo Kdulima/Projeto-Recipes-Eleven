@@ -13,9 +13,8 @@ export default function HeaderSearchBar(props) {
   const [recipesBy, setRecipesBy] = useState(undefined);
 
   useEffect(() => {
-    console.log(recipesBy, recipesType);
     requestRecipes(recipesBy, recipesType);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipesBy]);
 
   const handleSubmit = async (event) => {
