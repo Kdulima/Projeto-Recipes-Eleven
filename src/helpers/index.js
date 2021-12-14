@@ -21,10 +21,10 @@ export function treatPathname(pathname) {
     .join(' ')
     .split('-')
     .join(' ')
-    .trim()
+    .trim();
+
+  return handleHeaderName(pageName)
     .split(' ')
     .map((letters) => capitalize(letters))
     .join(' ');
-
-  return pageName;
 }
