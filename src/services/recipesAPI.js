@@ -24,7 +24,6 @@ export const getRecipesByName = async (name, recipeType) => {
 
   linkToFetch = `${linkToFetch}${RECIPES_BY_NAME}${name}`;
 
-  console.log(linkToFetch);
   const response = await fetch(linkToFetch);
   const data = await response.json();
   return data[recipeType];

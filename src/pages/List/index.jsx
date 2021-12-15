@@ -7,28 +7,40 @@ import CategoryFilters from './components/CategoryFilters';
 import mainContext from '../../contexts/mainContext';
 
 export default function List({ history: { location: { pathname } } }) {
-  const { recipes, recipesType, requestRecipes } = useContext(mainContext);
+  const {
+    recipes,
+    recipesType,
+    setRecipesBy,
+    showAlert,
+    setShowAlert,
+  } = useContext(mainContext);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    if (showAlert) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para essses filtros.');
+      setShowAlert(false);
+    }
+  }, [showAlert, setShowAlert]);
+
+  useEffect(() => {
     if (!isMounted) {
-      console.log('primeiro fetch(da lista)');
-      requestRecipes(undefined, 'drinks');
       setIsMounted(true);
     }
-  }, [isMounted, requestRecipes]);
+  }, [isMounted, setRecipesBy, recipesType]);
 
-  return (
+  return (recipes) && (
     <DefaultLayout pathname={ pathname }>
-      {console.log('to montando a lista')}
-      {recipes && recipes.length === 1 && (
+      {/* {console.log(recipes)} */}
+      {recipes.length === 1 && (
         <Redirect
           to={
             `${pathname}/${recipes[0][`id${recipesType === 'meals' ? 'Meal' : 'Drink'}`]}`
           }
         />
       )}
-      {recipes && recipes.length > 0 && (
+
+      {recipes.length > 0 && (
         <>
           <CategoryFilters />
           <RecipesList />

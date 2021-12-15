@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 // Removido Collapse pois estava quebrando os testes
 // import { Collapse } from 'react-bootstrap';
@@ -6,16 +6,10 @@ import mainContext from '../contexts/mainContext';
 
 export default function HeaderSearchBar(props) {
   const { isVisible } = props;
-  const { requestRecipes, recipesType } = useContext(mainContext);
+  const { setRecipesBy } = useContext(mainContext);
 
   const [inputSearch, setInputSearch] = useState('');
   const [radioValue, setRadioValue] = useState('');
-  const [recipesBy, setRecipesBy] = useState(undefined);
-
-  useEffect(() => {
-    requestRecipes(recipesBy, recipesType);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recipesBy]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

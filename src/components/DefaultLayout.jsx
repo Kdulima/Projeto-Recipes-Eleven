@@ -14,14 +14,11 @@ export default function DefaultLayout({ children, pathname = '' }) {
   const [isFooterVisible, setIsFooterVisible] = useState(true);
 
   useEffect(() => {
-    console.log('vousetar');
     if (pathname.includes('comida')) {
       setRecipesType('meals');
-      console.log('setei meals');
     }
     if (pathname.includes('bebida')) {
       setRecipesType('drinks');
-      console.log('setei drinks');
     }
 
     const routesToHideFooter = [
