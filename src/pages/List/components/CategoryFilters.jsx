@@ -1,12 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import mainContext from '../../../contexts/mainContext';
 
 const AMOUNT_OF_FILTERS = 5;
 const { mealsCategories } = require('../mealCategories');
+const { drinksCategories } = require('../drinkCategories');
 
 function CategoryFilters() {
-  const { setCategoryToFilter } = useContext(mainContext);
+  const { setCategoryToFilter, recipesType } = useContext(mainContext);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (recipesType === 'meals') {
+      return setCategories(mealsCategories);
+    }
+
+    setCategories(drinksCategories);
+  }, [recipesType]);
+
   return (
     <div>
       <Button
@@ -15,7 +26,7 @@ function CategoryFilters() {
         value="All"
         onClick={ () => setCategoryToFilter('') }
       />
-      {mealsCategories.map((category, index) => (
+      {categories.map((category, index) => (
         index < AMOUNT_OF_FILTERS ? (
           <Button
             key={ index }
