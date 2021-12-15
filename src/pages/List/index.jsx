@@ -18,7 +18,7 @@ export default function List({ history: { location: { pathname } } }) {
 
   useEffect(() => {
     if (showAlert) {
-      global.alert('Sinto muito, não encontramos nenhuma receita para essses filtros.');
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
       setShowAlert(false);
     }
   }, [showAlert, setShowAlert]);
