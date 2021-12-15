@@ -5,6 +5,7 @@ import {
   getRecipesByFirstLetter,
   getRecipesByIngredient,
   getRecipesByName,
+  getRecipesByCategory,
 } from '../services/recipesAPI';
 
 export default function MainProvider({ children }) {
@@ -12,6 +13,7 @@ export default function MainProvider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [recipes, setRecipes] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
+  const [canRedirect, setCanRedirect] = useState(true);
 
   //  recipesType sempre 'meals' ou 'drinks'
   const [recipesType, setRecipesType] = useState('meals');
@@ -34,6 +36,7 @@ export default function MainProvider({ children }) {
           setShowAlert(true);
           setIsFetching(false);
         }
+        setCanRedirect(true);
         break;
       case 'name':
         response = await getRecipesByName(searchInput, recipesType);
@@ -44,6 +47,7 @@ export default function MainProvider({ children }) {
           setShowAlert(true);
           setIsFetching(false);
         }
+        setCanRedirect(true);
         break;
       case 'firstLetter':
         response = await getRecipesByFirstLetter(searchInput, recipesType);
@@ -54,6 +58,7 @@ export default function MainProvider({ children }) {
           setShowAlert(true);
           setIsFetching(false);
         }
+        setCanRedirect(true);
         break;
       default:
         setIsFetching(false);
@@ -62,7 +67,19 @@ export default function MainProvider({ children }) {
     }
 
     requestRecipes();
-  }, [recipesType, recipesBy, categoryToFilter]);
+  }, [recipesType, recipesBy]);
+
+  useEffect(() => {
+    async function requestRecipesByCategory() {
+      const response = await getRecipesByCategory(categoryToFilter, recipesType);
+
+      if (response) {
+        setCanRedirect(false);
+        setRecipes(response);
+      }
+    }
+    requestRecipesByCategory();
+  }, [categoryToFilter, recipesType]);
 
   return (
     <mainContext.Provider
@@ -77,6 +94,7 @@ export default function MainProvider({ children }) {
         setCategoryToFilter,
         showAlert,
         setShowAlert,
+        canRedirect,
       } }
     >
       {children}

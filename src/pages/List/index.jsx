@@ -13,6 +13,7 @@ export default function List({ history: { location: { pathname } } }) {
     setRecipesBy,
     showAlert,
     setShowAlert,
+    canRedirect,
   } = useContext(mainContext);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -31,8 +32,7 @@ export default function List({ history: { location: { pathname } } }) {
 
   return (recipes) && (
     <DefaultLayout pathname={ pathname }>
-      {/* {console.log(recipes)} */}
-      {recipes.length === 1 && (
+      {(recipes.length === 1 && canRedirect) && (
         <Redirect
           to={
             `${pathname}/${recipes[0][`id${recipesType === 'meals' ? 'Meal' : 'Drink'}`]}`
