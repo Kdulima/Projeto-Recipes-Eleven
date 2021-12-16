@@ -13,6 +13,7 @@ export default function MainProvider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [recipes, setRecipes] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const [canRedirect, setCanRedirect] = useState(true);
 
   //  recipesType sempre 'meals' ou 'drinks'
@@ -66,20 +67,23 @@ export default function MainProvider({ children }) {
       }
     }
 
-    requestRecipes();
-  }, [recipesType, recipesBy]);
+    if (isMounted) {
+      requestRecipes();
+    }
+  }, [recipesType, recipesBy, isMounted]);
 
   useEffect(() => {
     async function requestRecipesByCategory() {
       const response = await getRecipesByCategory(categoryToFilter, recipesType);
-
       if (response) {
         setCanRedirect(false);
         setRecipes(response);
       }
     }
-    requestRecipesByCategory();
-  }, [categoryToFilter, recipesType]);
+    if (isMounted) {
+      requestRecipesByCategory();
+    }
+  }, [categoryToFilter, recipesType, isMounted]);
 
   return (
     <mainContext.Provider
@@ -95,6 +99,7 @@ export default function MainProvider({ children }) {
         showAlert,
         setShowAlert,
         canRedirect,
+        setIsMounted,
       } }
     >
       {children}

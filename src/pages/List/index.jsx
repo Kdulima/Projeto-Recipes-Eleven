@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import DefaultLayout from '../../components/DefaultLayout';
@@ -10,12 +10,15 @@ export default function List({ history: { location: { pathname } } }) {
   const {
     recipes,
     recipesType,
-    setRecipesBy,
     showAlert,
     setShowAlert,
     canRedirect,
+    setIsMounted,
   } = useContext(mainContext);
-  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, [setIsMounted, recipesType]);
 
   useEffect(() => {
     if (showAlert) {
@@ -23,12 +26,6 @@ export default function List({ history: { location: { pathname } } }) {
       setShowAlert(false);
     }
   }, [showAlert, setShowAlert]);
-
-  useEffect(() => {
-    if (!isMounted) {
-      setIsMounted(true);
-    }
-  }, [isMounted, setRecipesBy, recipesType]);
 
   return (recipes) && (
     <DefaultLayout pathname={ pathname }>
