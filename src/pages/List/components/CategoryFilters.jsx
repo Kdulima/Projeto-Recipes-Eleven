@@ -38,6 +38,7 @@ function CategoryFilters() {
         as="input"
         type="button"
         value="All"
+        data-testid="All-category-filter"
         onClick={ handleTest }
       />
       {categories.map((category, index) => (
@@ -56,9 +57,3 @@ function CategoryFilters() {
 }
 
 export default CategoryFilters;
-
-// CategoryFilters.propTypes = {
-//   categories: PropTypes.arrayOf(PropTypes.shape({
-//     strCategory: PropTypes.string.isRequired,
-//   })).isRequired,
-// };

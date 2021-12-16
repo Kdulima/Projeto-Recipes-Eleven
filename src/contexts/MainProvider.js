@@ -74,6 +74,7 @@ export default function MainProvider({ children }) {
 
   useEffect(() => {
     async function requestRecipesByCategory() {
+      console.log(categoryToFilter);
       const response = await getRecipesByCategory(categoryToFilter, recipesType);
       if (response) {
         setCanRedirect(false);
@@ -81,7 +82,11 @@ export default function MainProvider({ children }) {
       }
     }
     if (isMounted) {
-      requestRecipesByCategory();
+      if (categoryToFilter !== 'All') {
+        requestRecipesByCategory();
+      } else {
+        setRecipesBy((prevRecipesBy) => ({ ...prevRecipesBy }));
+      }
     }
   }, [categoryToFilter, recipesType, isMounted]);
 
