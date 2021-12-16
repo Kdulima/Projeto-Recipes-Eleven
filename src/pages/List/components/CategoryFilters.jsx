@@ -7,7 +7,11 @@ const { mealsCategories } = require('../mealCategories');
 const { drinksCategories } = require('../drinkCategories');
 
 function CategoryFilters() {
-  const { setCategoryToFilter, recipesType } = useContext(mainContext);
+  const {
+    setCategoryToFilter,
+    recipesType,
+    setRecipesBy,
+  } = useContext(mainContext);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -18,13 +22,23 @@ function CategoryFilters() {
     setCategories(drinksCategories);
   }, [recipesType]);
 
+  function handleTest(e) {
+    const filterValue = e.target.value;
+    setCategoryToFilter((prevState) => {
+      if (prevState === filterValue) {
+        return setRecipesBy((prevRecipesBy) => ({ ...prevRecipesBy }));
+      }
+      return filterValue;
+    });
+  }
+
   return (
     <div>
       <Button
         as="input"
         type="button"
         value="All"
-        onClick={ () => setCategoryToFilter('') }
+        onClick={ handleTest }
       />
       {categories.map((category, index) => (
         index < AMOUNT_OF_FILTERS ? (
@@ -33,7 +47,7 @@ function CategoryFilters() {
             as="input"
             type="button"
             value={ category.strCategory }
-            onClick={ () => setCategoryToFilter(category.strCategory) }
+            onClick={ handleTest }
             data-testid={ `${category.strCategory}-category-filter` }
           />
         ) : null))}
