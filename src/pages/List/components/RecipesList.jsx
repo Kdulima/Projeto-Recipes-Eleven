@@ -6,7 +6,6 @@ const RECIPES_TO_SHOW = 12;
 
 const RecipesList = () => {
   const { recipes } = useContext(mainContext);
-
   return recipes.map((recipe, index) => (
     index < RECIPES_TO_SHOW ? (
       <RecipeCard

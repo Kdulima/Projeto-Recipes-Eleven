@@ -74,7 +74,6 @@ export default function MainProvider({ children }) {
 
   useEffect(() => {
     async function requestRecipesByCategory() {
-      console.log(categoryToFilter);
       const response = await getRecipesByCategory(categoryToFilter, recipesType);
       if (response) {
         setCanRedirect(false);
