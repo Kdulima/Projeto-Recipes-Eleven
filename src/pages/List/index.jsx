@@ -10,9 +10,7 @@ export default function List({ history: { location: { pathname } } }) {
   const {
     recipes,
     recipesType,
-    showAlert,
-    setShowAlert,
-    canRedirect,
+    canTryRedirect,
     setIsMounted,
   } = useContext(mainContext);
 
@@ -20,16 +18,9 @@ export default function List({ history: { location: { pathname } } }) {
     setIsMounted(true);
   }, [setIsMounted, recipesType]);
 
-  useEffect(() => {
-    if (showAlert) {
-      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      setShowAlert(false);
-    }
-  }, [showAlert, setShowAlert]);
-
   return (recipes) && (
     <DefaultLayout pathname={ pathname }>
-      {(recipes.length === 1 && canRedirect) && (
+      {(recipes.length === 1 && canTryRedirect) && (
         <Redirect
           to={
             `${pathname}/${recipes[0][`id${recipesType === 'meals' ? 'Meal' : 'Drink'}`]}`

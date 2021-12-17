@@ -12,15 +12,24 @@ export default function MainProvider({ children }) {
   const [categoryToFilter, setCategoryToFilter] = useState('');
   const [isFetching, setIsFetching] = useState(false);
   const [recipes, setRecipes] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [canRedirect, setCanRedirect] = useState(true);
+  const [canTryRedirect, setCanTryRedirect] = useState(true);
 
   //  recipesType sempre 'meals' ou 'drinks'
   const [recipesType, setRecipesType] = useState('meals');
   const [recipesBy, setRecipesBy] = useState({
     searchInput: '', searchType: 'name',
   });
+
+  function handleResponse(response) {
+    if (response !== null) {
+      setRecipes(response);
+    } else {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+    setIsFetching(false);
+    setCanTryRedirect(true);
+  }
 
   useEffect(() => {
     async function requestRecipes() {
@@ -30,36 +39,15 @@ export default function MainProvider({ children }) {
       switch (searchType) {
       case 'ingredient':
         response = await getRecipesByIngredient(searchInput, recipesType);
-        if (response !== null) {
-          setRecipes(response);
-          setIsFetching(false);
-        } else {
-          setShowAlert(true);
-          setIsFetching(false);
-        }
-        setCanRedirect(true);
+        handleResponse(response);
         break;
       case 'name':
         response = await getRecipesByName(searchInput, recipesType);
-        if (response !== null) {
-          setRecipes(response);
-          setIsFetching(false);
-        } else {
-          setShowAlert(true);
-          setIsFetching(false);
-        }
-        setCanRedirect(true);
+        handleResponse(response);
         break;
       case 'firstLetter':
         response = await getRecipesByFirstLetter(searchInput, recipesType);
-        if (response !== null) {
-          setRecipes(response);
-          setIsFetching(false);
-        } else {
-          setShowAlert(true);
-          setIsFetching(false);
-        }
-        setCanRedirect(true);
+        handleResponse(response);
         break;
       default:
         setIsFetching(false);
@@ -76,7 +64,7 @@ export default function MainProvider({ children }) {
     async function requestRecipesByCategory() {
       const response = await getRecipesByCategory(categoryToFilter, recipesType);
       if (response) {
-        setCanRedirect(false);
+        setCanTryRedirect(false);
         setRecipes(response);
       }
     }
@@ -100,9 +88,7 @@ export default function MainProvider({ children }) {
         recipes,
         categoryToFilter,
         setCategoryToFilter,
-        showAlert,
-        setShowAlert,
-        canRedirect,
+        canTryRedirect,
         setIsMounted,
       } }
     >
