@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import DefaultLayout from '../../components/DefaultLayout';
@@ -9,21 +9,16 @@ import mainContext from '../../contexts/mainContext';
 export default function List({ history: { location: { pathname } } }) {
   const {
     recipes,
-    recipesType,
     canTryRedirect,
-    setIsMounted,
+    idType,
   } = useContext(mainContext);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, [setIsMounted, recipesType]);
 
   return (recipes) && (
     <DefaultLayout pathname={ pathname }>
       {(recipes.length === 1 && canTryRedirect) && (
         <Redirect
           to={
-            `${pathname}/${recipes[0][`id${recipesType === 'meals' ? 'Meal' : 'Drink'}`]}`
+            `${pathname}/${recipes[0][`id${idType}`]}`
           }
         />
       )}

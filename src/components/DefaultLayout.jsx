@@ -7,18 +7,20 @@ import Header from './Header';
 import { treatPathname } from '../helpers';
 import mainContext from '../contexts/mainContext';
 
-export default function DefaultLayout({ children, pathname = '' }) {
+export default function DefaultLayout({ children, pathname = '', hideAll }) {
   const pageName = treatPathname(pathname);
-  const { setRecipesType } = useContext(mainContext);
+  const { setRecipesType, setIdType } = useContext(mainContext);
 
   const [isFooterVisible, setIsFooterVisible] = useState(true);
 
   useEffect(() => {
     if (pathname.includes('comida')) {
       setRecipesType('meals');
+      setIdType('Meal');
     }
     if (pathname.includes('bebida')) {
       setRecipesType('drinks');
+      setIdType('Drink');
     }
 
     const routesToHideFooter = [
@@ -29,20 +31,25 @@ export default function DefaultLayout({ children, pathname = '' }) {
     if (routesToHideFooter.includes(pageName)) {
       setIsFooterVisible(false);
     }
-  }, [pathname, setRecipesType, pageName]);
+  }, [pathname, setRecipesType, setIdType, pageName]);
 
   return (
     <>
-      <Header pageName={ pageName } />
+      {!hideAll && <Header pageName={ pageName } />}
       <main>
         {children}
       </main>
-      {isFooterVisible && <Footer />}
+      {isFooterVisible && !hideAll && <Footer />}
     </>
   );
 }
 
+DefaultLayout.defaultProps = {
+  hideAll: false,
+};
+
 DefaultLayout.propTypes = {
   children: PropTypes.node.isRequired,
   pathname: PropTypes.string.isRequired,
+  hideAll: PropTypes.bool,
 };

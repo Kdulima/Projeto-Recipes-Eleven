@@ -17,9 +17,12 @@ export default function MainProvider({ children }) {
 
   //  recipesType sempre 'meals' ou 'drinks'
   const [recipesType, setRecipesType] = useState('meals');
+  const [idType, setIdType] = useState('idMeal');
   const [recipesBy, setRecipesBy] = useState({
     searchInput: '', searchType: 'name',
   });
+
+  useEffect(() => setIsMounted(true), []);
 
   function handleResponse(response) {
     if (response !== null) {
@@ -80,16 +83,19 @@ export default function MainProvider({ children }) {
   return (
     <mainContext.Provider
       value={ {
-        recipesType,
-        setRecipesType,
-        recipesBy,
-        setRecipesBy,
         isFetching,
         recipes,
+        isMounted,
+        canTryRedirect,
+
+        recipesType,
+        setRecipesType,
+        idType,
+        setIdType,
+        recipesBy,
+        setRecipesBy,
         categoryToFilter,
         setCategoryToFilter,
-        canTryRedirect,
-        setIsMounted,
       } }
     >
       {children}
