@@ -56,7 +56,11 @@ export const getRecipesByCategory = async (category = 'cocktail', recipeType) =>
 
 export const getRecipeDetails = async (recipeId, recipeType) => {
   const linkToFetch = setLinkToFetch(recipeType);
-
   const data = await getApiData(`${linkToFetch}${RECIPES_DETAIL_BY_ID}${recipeId}`);
-  return data[recipeType];
+
+  if (data[recipeType]) {
+    return data[recipeType];
+  }
+
+  return [{}];
 };

@@ -23,7 +23,6 @@ export default function RecipeDetails({ match, location }) {
     async function getDetails() {
       const response = await getRecipeDetails(idURL, recipesType);
       setRecipeDetail(...response);
-      console.log(response);
     }
     if (isMounted) {
       getDetails();
