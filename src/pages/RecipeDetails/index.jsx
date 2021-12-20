@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import mainContext from '../../contexts/mainContext';
+
+import '../../styles/RecipeDetail.css';
+
+import { getRecipeDetails, getRecipesByName } from '../../services/recipesAPI';
+
 import DefaultLayout from '../../components/DefaultLayout';
-import { getRecipeDetails } from '../../services/recipesAPI';
 import RecipeVideo from './components/RecipeVideo';
 import IngredientsList from './components/IngredientsList';
+import RecommendationsList from './components/RecommendationsList';
 
 export default function RecipeDetails({ match, location }) {
   const { isMounted, recipesType, idType } = useContext(mainContext);
   const [recipeDetail, setRecipeDetail] = useState({});
+  const [recommendations, setRecommendatios] = useState([]);
 
   const idURL = match.params.id;
 
@@ -25,7 +31,14 @@ export default function RecipeDetails({ match, location }) {
     async function getDetails() {
       const response = await getRecipeDetails(idURL, recipesType);
       setRecipeDetail(...response);
-      console.log(...response);
+      // console.log(...response);
+      if (recipesType === 'drinks') {
+        const mealRecommendations = await getRecipesByName('', 'meals');
+        return setRecommendatios(mealRecommendations);
+      }
+
+      const drinkRecommendations = await getRecipesByName('', 'drinks');
+      return setRecommendatios(drinkRecommendations);
     }
     if (isMounted) {
       getDetails();
@@ -34,52 +47,56 @@ export default function RecipeDetails({ match, location }) {
 
   return isMounted && (
     <DefaultLayout pathname={ location.pathname } hideAll>
-      <>
-        <img
-          data-testid="recipe-photo"
-          width="200"
-          src={ recipePhoto }
-          alt={ recipeTitle }
-        />
-        <p data-testid="recipe-title">{recipeTitle}</p>
+      <img
+        data-testid="recipe-photo"
+        width="200"
+        src={ recipePhoto }
+        alt={ recipeTitle }
+      />
+      <p data-testid="recipe-title">{recipeTitle}</p>
 
-        <button
-          type="button"
-          data-testid="share-btn"
-        >
-          Compartilhar
-        </button>
-        <button
-          type="button"
-          data-testid="favorite-btn"
-        >
-          Favoritar
-        </button>
+      <button
+        type="button"
+        data-testid="share-btn"
+      >
+        Compartilhar
+      </button>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+      >
+        Favoritar
+      </button>
 
-        <p data-testid="recipe-category">
-          {`${strCategory} ${strAlcoholic || ''}`}
-        </p>
+      <p data-testid="recipe-category">
+        {`${strCategory} ${strAlcoholic || ''}`}
+      </p>
 
-        <IngredientsList recipeDetail={ recipeDetail } />
+      <IngredientsList recipeDetail={ recipeDetail } />
 
-        <p data-testid="instructions">{strInstructions}</p>
+      <p data-testid="instructions">{strInstructions}</p>
 
-        {strYoutube && <RecipeVideo
-          strYoutube={ strYoutube }
-          recipesType={ recipesType }
-          recipeTitle={ recipeTitle }
-        />}
+      {strYoutube && <RecipeVideo
+        strYoutube={ strYoutube }
+        recipesType={ recipesType }
+        recipeTitle={ recipeTitle }
+      />}
 
-        <div data-testid="0-recomendation-card">Recomendações</div>
+      <button
+        data-testid="start-recipe-btn"
+        type="button"
+      >
+        Iniciar receita
+      </button>
 
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-        >
-          Iniciar receita
-        </button>
-
-      </>
+      <div className="recommendation-list">
+        {recommendations.length > 0 && (
+          <RecommendationsList
+            recommendations={ recommendations }
+            recipesType={ recipesType }
+          />
+        )}
+      </div>
     </DefaultLayout>
   );
 }

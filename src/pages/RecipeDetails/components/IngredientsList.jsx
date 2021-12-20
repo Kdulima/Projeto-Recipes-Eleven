@@ -11,9 +11,8 @@ export default function IngredientsList({ recipeDetail }) {
           key={ ingredient }
           data-testid={ `${index}-ingredient-name-and-measure` }
         >
-          {recipeDetail[ingredient]}
-          {' - '}
           {recipeDetail[`strMeasure${index + 1}`]}
+          {recipeDetail[ingredient]}
         </p>
       );
     }

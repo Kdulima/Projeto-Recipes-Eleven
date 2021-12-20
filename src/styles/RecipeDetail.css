@@ -1,0 +1,9 @@
+.recommendation-list {
+  display: flex;
+  width: 100vw;
+  overflow-x: scroll;
+}
+
+.recommendation-list > div {
+  min-width: 50%;
+}

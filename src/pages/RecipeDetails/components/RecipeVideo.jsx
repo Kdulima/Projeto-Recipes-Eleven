@@ -16,8 +16,12 @@ export default function RecipeVideo({ strYoutube, recipesType, recipeTitle }) {
   );
 }
 
+RecipeVideo.defaultProps = ({
+  recipeTitle: '',
+});
+
 RecipeVideo.propTypes = ({
   strYoutube: PropTypes.string.isRequired,
-  recipeTitle: PropTypes.string.isRequired,
+  recipeTitle: PropTypes.string,
   recipesType: PropTypes.string.isRequired,
 });
