@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import mainContext from '../contexts/mainContext';
-import DefaultLayout from '../components/DefaultLayout';
-import { getRecipeDetails } from '../services/recipesAPI';
+import mainContext from '../../contexts/mainContext';
+import DefaultLayout from '../../components/DefaultLayout';
+import { getRecipeDetails } from '../../services/recipesAPI';
+import RecipeVideo from './components/RecipeVideo';
 
 export default function RecipeDetails({ match, location }) {
   const { isMounted, recipesType, idType } = useContext(mainContext);
@@ -70,13 +71,22 @@ export default function RecipeDetails({ match, location }) {
         <p data-testid="recipe-category">{strCategory}</p>
         {renderIngredients()}
         <p data-testid="instructions">{strInstructions}</p>
-        {console.log(strYoutube)}
-        <iframe
-          title={ `Receita de ${recipeTitle}` }
-          height="200"
-          width="350"
-          src={ strYoutube }
-        />
+
+        {strYoutube && <RecipeVideo
+          strYoutube={ strYoutube }
+          recipesType={ recipesType }
+          recipeTitle={ recipeTitle }
+        />}
+
+        <div data-testid="0-recomendation-card">Recomendações</div>
+
+        <button
+          data-testid="start-recipe-btn"
+          type="button"
+        >
+          Iniciar receita
+        </button>
+
       </>
     </DefaultLayout>
   );
