@@ -9,12 +9,14 @@ import {
 } from '../services/recipesAPI';
 
 export default function MainProvider({ children }) {
-  const [categoryToFilter, setCategoryToFilter] = useState('');
   const [isFetching, setIsFetching] = useState(false);
-  const [recipes, setRecipes] = useState([]);
   const [isMounted, setIsMounted] = useState(false);
   const [canTryRedirect, setCanTryRedirect] = useState(true);
 
+  const [categoryToFilter, setCategoryToFilter] = useState('');
+  const [recipes, setRecipes] = useState([]);
+  const [idsInProgress, setIdsInProgress] = useState([]);
+  const [idsDone, setIdsDone] = useState([]);
   //  recipesType sempre 'meals' ou 'drinks'
   const [recipesType, setRecipesType] = useState('meals');
   const [idType, setIdType] = useState('idMeal');
@@ -80,6 +82,29 @@ export default function MainProvider({ children }) {
     }
   }, [categoryToFilter, recipesType, isMounted]);
 
+  useEffect(() => {
+    if (!isMounted) {
+      const inProgressList = localStorage.getItem('idsInProgress');
+      const doneList = localStorage.getItem('idsDOne');
+      setIdsInProgress(JSON.parse(inProgressList) || []);
+      setIdsDone(JSON.parse(doneList) || []);
+    }
+  }, [isMounted]);
+
+  useEffect(() => {
+    localStorage.setItem('idsInProgress', JSON.stringify(idsInProgress));
+  }, [idsInProgress]);
+
+  function addInProgress(id) {
+    setIdsInProgress((prevState) => {
+      if (prevState.includes(id)) {
+        return prevState;
+      }
+
+      return [...prevState, id];
+    });
+  }
+
   return (
     <mainContext.Provider
       value={ {
@@ -96,6 +121,9 @@ export default function MainProvider({ children }) {
         setRecipesBy,
         categoryToFilter,
         setCategoryToFilter,
+        idsInProgress,
+        addInProgress,
+        idsDone,
       } }
     >
       {children}

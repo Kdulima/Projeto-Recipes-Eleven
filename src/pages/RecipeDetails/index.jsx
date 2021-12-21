@@ -11,13 +11,19 @@ import RecipeVideo from './components/RecipeVideo';
 import IngredientsList from './components/IngredientsList';
 import RecommendationsList from './components/RecommendationsList';
 
-export default function RecipeDetails({ match, location }) {
-  const { isMounted, recipesType, idType } = useContext(mainContext);
+export default function RecipeDetails({ match, location, history }) {
+  const {
+    isMounted,
+    recipesType,
+    idType,
+    idsInProgress,
+    addInProgress,
+    idsDone,
+  } = useContext(mainContext);
   const [recipeDetail, setRecipeDetail] = useState({});
   const [recommendations, setRecommendatios] = useState([]);
 
   const idURL = match.params.id;
-
   const {
     [`str${idType}`]: recipeTitle,
     [`str${idType}Thumb`]: recipePhoto,
@@ -44,6 +50,14 @@ export default function RecipeDetails({ match, location }) {
       getDetails();
     }
   }, [isMounted, idURL, recipesType]);
+
+  function handleStatusRecipe() {
+    addInProgress(idURL);
+    if (recipesType === 'drinks') {
+      return history.push(`/bebidas/${idURL}/in-progress`);
+    }
+    return history.push(`/comidas/${idURL}/in-progress`);
+  }
 
   return isMounted && (
     <DefaultLayout pathname={ location.pathname } hideAll>
@@ -90,15 +104,19 @@ export default function RecipeDetails({ match, location }) {
           />
         )}
       </div>
-      <div className="start-recipe-container">
-        <button
-          data-testid="start-recipe-btn"
-          className="start-recipe-btn"
-          type="button"
-        >
-          Iniciar Receita
-        </button>
-      </div>
+
+      {(!idsDone.includes(idURL)) && (
+        <div className="start-recipe-container">
+          <button
+            data-testid="start-recipe-btn"
+            className="start-recipe-btn"
+            type="button"
+            onClick={ handleStatusRecipe }
+          >
+            {idsInProgress.includes(idURL) ? 'Continuar Receita' : 'Iniciar Receita'}
+          </button>
+        </div>
+      )}
     </DefaultLayout>
   );
 }
@@ -111,5 +129,8 @@ RecipeDetails.propTypes = ({
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
 });

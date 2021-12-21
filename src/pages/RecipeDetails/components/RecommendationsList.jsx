@@ -19,7 +19,6 @@ export default function RecommendationsList({ recommendations, recipesType }) {
             to={ `${pathToSend}/${recipe[`id${idType}`]}` }
           >
             <p data-testid={ `${index}-recomendation-title` }>
-              {console.log(index)}
               {recipe[`str${idType}`]}
             </p>
           </Link>
