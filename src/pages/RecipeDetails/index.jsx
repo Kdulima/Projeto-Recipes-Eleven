@@ -16,14 +16,15 @@ export default function RecipeDetails({ match, location, history }) {
     isMounted,
     recipesType,
     idType,
-    idsInProgress,
-    addInProgress,
+    inProgressRecipes,
+    addRecipeInProgress,
     idsDone,
   } = useContext(mainContext);
   const [recipeDetail, setRecipeDetail] = useState({});
   const [recommendations, setRecommendatios] = useState([]);
 
   const idURL = match.params.id;
+  const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
   const {
     [`str${idType}`]: recipeTitle,
     [`str${idType}Thumb`]: recipePhoto,
@@ -52,7 +53,7 @@ export default function RecipeDetails({ match, location, history }) {
   }, [isMounted, idURL, recipesType]);
 
   function handleStatusRecipe() {
-    addInProgress(idURL);
+    addRecipeInProgress(idURL, type);
     if (recipesType === 'drinks') {
       return history.push(`/bebidas/${idURL}/in-progress`);
     }
@@ -113,7 +114,8 @@ export default function RecipeDetails({ match, location, history }) {
             type="button"
             onClick={ handleStatusRecipe }
           >
-            {idsInProgress.includes(idURL) ? 'Continuar Receita' : 'Iniciar Receita'}
+            {/* arrumar essa logica de pegar a chave do objeto */}
+            {(inProgressRecipes[type][idURL]) ? 'Continuar Receita' : 'Iniciar Receita'}
           </button>
         </div>
       )}

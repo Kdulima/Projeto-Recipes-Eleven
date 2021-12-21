@@ -16,12 +16,12 @@ export default function Routes() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route exact path="/comidas" component={ List } />
-      <Route exact path="/bebidas" component={ List } />
-      <Route exact path="/comidas/:id" component={ RecipeDetails } />
-      <Route exact path="/bebidas/:id" component={ RecipeDetails } />
       <Route path="/comidas/:id/in-progress" component={ RecipeInProgress } />
       <Route path="/bebidas/:id/in-progress" component={ RecipeInProgress } />
+      <Route exact path="/comidas/:id" component={ RecipeDetails } />
+      <Route exact path="/bebidas/:id" component={ RecipeDetails } />
+      <Route exact path="/comidas" component={ List } />
+      <Route exact path="/bebidas" component={ List } />
       <Route exact path="/explorar" component={ Explore } />
       <Route exact path="/explorar/comidas" component={ ExploreRecipes } />
       <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />

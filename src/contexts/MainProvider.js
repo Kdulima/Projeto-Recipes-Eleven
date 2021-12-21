@@ -15,7 +15,7 @@ export default function MainProvider({ children }) {
 
   const [categoryToFilter, setCategoryToFilter] = useState('');
   const [recipes, setRecipes] = useState([]);
-  const [idsInProgress, setIdsInProgress] = useState([]);
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
   const [idsDone, setIdsDone] = useState([]);
   //  recipesType sempre 'meals' ou 'drinks'
   const [recipesType, setRecipesType] = useState('meals');
@@ -84,25 +84,25 @@ export default function MainProvider({ children }) {
 
   useEffect(() => {
     if (!isMounted) {
-      const inProgressList = localStorage.getItem('idsInProgress');
+      const inProgressList = localStorage.getItem('inProgressRecipes');
       const doneList = localStorage.getItem('idsDOne');
-      setIdsInProgress(JSON.parse(inProgressList) || []);
+      setInProgressRecipes(JSON.parse(inProgressList) || {});
       setIdsDone(JSON.parse(doneList) || []);
     }
   }, [isMounted]);
 
   useEffect(() => {
-    localStorage.setItem('idsInProgress', JSON.stringify(idsInProgress));
-  }, [idsInProgress]);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+  }, [inProgressRecipes]);
 
-  function addInProgress(id) {
-    setIdsInProgress((prevState) => {
-      if (prevState.includes(id)) {
-        return prevState;
-      }
-
-      return [...prevState, id];
-    });
+  function addRecipeInProgress(id, type) {
+    setInProgressRecipes((prevState) => ({
+      ...prevState,
+      [type]: {
+        ...prevState[type],
+        [id]: [],
+      },
+    }));
   }
 
   return (
@@ -121,8 +121,8 @@ export default function MainProvider({ children }) {
         setRecipesBy,
         categoryToFilter,
         setCategoryToFilter,
-        idsInProgress,
-        addInProgress,
+        inProgressRecipes,
+        addRecipeInProgress,
         idsDone,
       } }
     >
