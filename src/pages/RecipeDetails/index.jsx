@@ -82,13 +82,6 @@ export default function RecipeDetails({ match, location }) {
         recipeTitle={ recipeTitle }
       />}
 
-      <button
-        data-testid="start-recipe-btn"
-        type="button"
-      >
-        Iniciar receita
-      </button>
-
       <div className="recommendation-list">
         {recommendations.length > 0 && (
           <RecommendationsList
@@ -96,6 +89,15 @@ export default function RecipeDetails({ match, location }) {
             recipesType={ recipesType }
           />
         )}
+      </div>
+      <div className="start-recipe-container">
+        <button
+          data-testid="start-recipe-btn"
+          className="start-recipe-btn"
+          type="button"
+        >
+          Iniciar Receita
+        </button>
       </div>
     </DefaultLayout>
   );

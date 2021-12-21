@@ -7,3 +7,15 @@
 .recommendation-list > div {
   min-width: 50%;
 }
+
+.start-recipe-container {
+  display: flex;
+  margin-top: 15%;
+  justify-content: center;
+}
+
+.start-recipe-btn {
+  position: fixed;
+  margin: auto;
+  bottom: 0px
+}
