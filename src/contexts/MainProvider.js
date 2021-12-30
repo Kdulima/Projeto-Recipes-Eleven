@@ -15,8 +15,9 @@ export default function MainProvider({ children }) {
 
   const [categoryToFilter, setCategoryToFilter] = useState('');
   const [recipes, setRecipes] = useState([]);
-  const [inProgressRecipes, setInProgressRecipes] = useState({});
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
   //  recipesType sempre 'meals' ou 'drinks'
   const [recipesType, setRecipesType] = useState('meals');
   const [idType, setIdType] = useState('idMeal');
@@ -84,10 +85,13 @@ export default function MainProvider({ children }) {
 
   useEffect(() => {
     if (!isMounted) {
-      const inProgressList = localStorage.getItem('inProgressRecipes');
       const doneList = localStorage.getItem('doneRecipes');
-      setInProgressRecipes(JSON.parse(inProgressList) || {});
+      const favoriteList = localStorage.getItem('favoriteRecipes');
+      const inProgressList = localStorage.getItem('inProgressRecipes');
+
       setDoneRecipes(JSON.parse(doneList) || []);
+      setFavoriteRecipes(JSON.parse(favoriteList) || []);
+      setInProgressRecipes(JSON.parse(inProgressList) || {});
     }
   }, [isMounted]);
 
@@ -105,6 +109,19 @@ export default function MainProvider({ children }) {
     }));
   }
 
+  function handleInFavorites(recipeDetail) {
+    setFavoriteRecipes((prevState) => {
+      if (prevState.some(({ id }) => id === recipeDetail.id)) {
+        return prevState.filter(({ id }) => id !== recipeDetail.id);
+      }
+      return [...prevState, recipeDetail];
+    });
+  }
+
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }, [favoriteRecipes]);
+
   return (
     <mainContext.Provider
       value={ {
@@ -112,6 +129,7 @@ export default function MainProvider({ children }) {
         recipes,
         isMounted,
         canTryRedirect,
+        doneRecipes,
 
         recipesType,
         setRecipesType,
@@ -121,9 +139,11 @@ export default function MainProvider({ children }) {
         setRecipesBy,
         categoryToFilter,
         setCategoryToFilter,
+        favoriteRecipes,
+        setFavoriteRecipes,
+        handleInFavorites,
         inProgressRecipes,
         addInProgressRecipe,
-        doneRecipes,
       } }
     >
       {children}
