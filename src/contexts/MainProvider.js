@@ -110,7 +110,6 @@ export default function MainProvider({ children }) {
   }
 
   function handleInFavorites(recipeDetail) {
-    console.log(recipeDetail);
     setFavoriteRecipes((prevState) => {
       if (prevState.some(({ id }) => id === recipeDetail.id)) {
         return prevState.filter(({ id }) => id !== recipeDetail.id);
