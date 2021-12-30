@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 export default function RecommendationsList({ recommendations, recipesType }) {
   const MAX_LENGTH = 6;
-  // console.log(recommendations[0]);
   const idType = recipesType === 'meals' ? 'Drink' : 'Meal';
   const pathToSend = recipesType === 'meals' ? '/bebidas' : '/comidas';
 

@@ -17,8 +17,8 @@ export default function RecipeDetails({ match, location, history }) {
     recipesType,
     idType,
     inProgressRecipes,
-    addRecipeInProgress,
-    idsDone,
+    addInProgressRecipe,
+    doneRecipes,
   } = useContext(mainContext);
   const [recipeDetail, setRecipeDetail] = useState({});
   const [recommendations, setRecommendatios] = useState([]);
@@ -38,7 +38,6 @@ export default function RecipeDetails({ match, location, history }) {
     async function getDetails() {
       const response = await getRecipeDetails(idURL, recipesType);
       setRecipeDetail(...response);
-      // console.log(...response);
       if (recipesType === 'drinks') {
         const mealRecommendations = await getRecipesByName('', 'meals');
         return setRecommendatios(mealRecommendations);
@@ -52,8 +51,8 @@ export default function RecipeDetails({ match, location, history }) {
     }
   }, [isMounted, idURL, recipesType]);
 
-  function handleStatusRecipe() {
-    addRecipeInProgress(idURL, type);
+  function handleRecipeBtn() {
+    addInProgressRecipe(idURL, type);
     if (recipesType === 'drinks') {
       return history.push(`/bebidas/${idURL}/in-progress`);
     }
@@ -98,24 +97,23 @@ export default function RecipeDetails({ match, location, history }) {
       />}
 
       <div className="recommendation-list">
-        {recommendations.length > 0 && (
-          <RecommendationsList
-            recommendations={ recommendations }
-            recipesType={ recipesType }
-          />
-        )}
+        <RecommendationsList
+          recommendations={ recommendations }
+          recipesType={ recipesType }
+        />
       </div>
 
-      {(!idsDone.includes(idURL)) && (
+      {!doneRecipes.some(({ id }) => id === idURL) && (
         <div className="start-recipe-container">
           <button
             data-testid="start-recipe-btn"
             className="start-recipe-btn"
             type="button"
-            onClick={ handleStatusRecipe }
+            onClick={ handleRecipeBtn }
           >
-            {/* arrumar essa logica de pegar a chave do objeto */}
-            {(inProgressRecipes[type][idURL]) ? 'Continuar Receita' : 'Iniciar Receita'}
+            {inProgressRecipes[type] && inProgressRecipes[type][idURL] ? (
+              'Continuar Receita'
+            ) : ('Iniciar receita')}
           </button>
         </div>
       )}
