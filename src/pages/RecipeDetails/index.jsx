@@ -67,7 +67,7 @@ export default function RecipeDetails({ match, location, history }) {
         idURL={ idURL }
         recipeDetail={ {
           id: idURL,
-          type: recipesType,
+          type: recipesType === 'drinks' ? 'bebida' : 'comida',
           area: strArea || '',
           category: strCategory,
           alcoholicOrNot: strAlcoholic || '',
