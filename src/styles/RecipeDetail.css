@@ -1,7 +1,7 @@
 .recommendation-list {
   display: flex;
-  width: 100vw;
   overflow-x: scroll;
+  width: 100vw;
 }
 
 .recommendation-list > div {
@@ -10,12 +10,12 @@
 
 .start-recipe-container {
   display: flex;
-  margin-top: 15%;
   justify-content: center;
+  margin-top: 15%;
 }
 
 .start-recipe-btn {
-  position: fixed;
+  bottom: 0;
   margin: auto;
-  bottom: 0px
+  position: fixed;
 }
