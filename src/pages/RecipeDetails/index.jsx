@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import shareIcon from '../../images/shareIcon.svg';
 import mainContext from '../../contexts/mainContext';
 
 import '../../styles/RecipeDetail.css';
@@ -20,8 +21,10 @@ export default function RecipeDetails({ match, location, history }) {
     addInProgressRecipe,
     doneRecipes,
   } = useContext(mainContext);
+
   const [recipeDetail, setRecipeDetail] = useState({});
   const [recommendations, setRecommendatios] = useState([]);
+  const [showShareMessage, setShowShareMessage] = useState(false);
 
   const idURL = match.params.id;
   const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
@@ -59,6 +62,12 @@ export default function RecipeDetails({ match, location, history }) {
     return history.push(`/comidas/${idURL}/in-progress`);
   }
 
+  function copyToClipboard() {
+    // Créditos para escrever no clipboard -> https://stackoverflow.com/questions/39501289/in-reactjs-how-to-copy-text-to-clipboard
+    navigator.clipboard.writeText(global.location.href);
+    setShowShareMessage(true);
+  }
+
   return isMounted && (
     <DefaultLayout pathname={ location.pathname } hideAll>
       <img
@@ -72,9 +81,14 @@ export default function RecipeDetails({ match, location, history }) {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ copyToClipboard }
       >
-        Compartilhar
+        <img
+          src={ shareIcon }
+          alt="Share Icon"
+        />
       </button>
+      {showShareMessage && 'Link copiado!'}
       <button
         type="button"
         data-testid="favorite-btn"
