@@ -8,20 +8,22 @@ export default function RecommendationsList({ recommendations, recipesType }) {
   const pathToSend = recipesType === 'meals' ? '/bebidas' : '/comidas';
 
   return recommendations.map((recipe, index) => {
+    console.log(recipe);
     if (index < MAX_LENGTH) {
       return (
-        <div
+        <Link
+          to={ `${pathToSend}/${recipe[`id${idType}`]}` }
           key={ index }
           data-testid={ `${index}-recomendation-card` }
         >
-          <Link
-            to={ `${pathToSend}/${recipe[`id${idType}`]}` }
-          >
-            <p data-testid={ `${index}-recomendation-title` }>
-              {recipe[`str${idType}`]}
-            </p>
-          </Link>
-        </div>
+          <img
+            src={ recipe[`str${idType}Thumb`] }
+            alt={ recipe[`str${idType}`] }
+          />
+          <span data-testid={ `${index}-recomendation-title` }>
+            {recipe[`str${idType}`]}
+          </span>
+        </Link>
       );
     }
     return '';
