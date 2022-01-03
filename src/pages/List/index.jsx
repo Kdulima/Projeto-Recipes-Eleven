@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+
 import DefaultLayout from '../../components/DefaultLayout';
 import RecipesList from './components/RecipesList';
 import CategoryFilters from './components/CategoryFilters';
+
+import { getRecipeCategories } from '../../services/recipesAPI';
 import mainContext from '../../contexts/mainContext';
 
 export default function List({ history: { location: { pathname } } }) {
@@ -11,7 +14,18 @@ export default function List({ history: { location: { pathname } } }) {
     recipes,
     canTryRedirect,
     idType,
+    recipesType,
   } = useContext(mainContext);
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function getCategories() {
+      const response = await getRecipeCategories(recipesType);
+      setCategories(response);
+    }
+    getCategories();
+  }, [recipesType]);
 
   return (recipes) && (
     <DefaultLayout pathname={ pathname }>
@@ -25,7 +39,7 @@ export default function List({ history: { location: { pathname } } }) {
 
       {recipes.length > 0 && (
         <>
-          <CategoryFilters />
+          <CategoryFilters categories={ categories } />
           <RecipesList />
         </>
       )}

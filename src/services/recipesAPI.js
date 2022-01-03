@@ -6,6 +6,7 @@ const RECIPES_BY_NAME = 'search.php?s=';
 const RECIPES_BY_FIRST_LETTER = 'search.php?f=';
 const RECIPES_BY_CATEGORY = 'filter.php?c=';
 const RECIPES_DETAIL_BY_ID = 'lookup.php?i=';
+const RECIPES_CATEGORIES = 'list.php?c=list';
 
 const setLinkToFetch = (recipeType) => {
   let linkToFetch = null;
@@ -63,4 +64,11 @@ export const getRecipeDetails = async (recipeId, recipeType) => {
   }
 
   return [{}];
+};
+
+export const getRecipeCategories = async (recipeType) => {
+  const linkToFetch = setLinkToFetch(recipeType);
+  const data = await getApiData(`${linkToFetch}${RECIPES_CATEGORIES}`);
+
+  return data[recipeType];
 };
