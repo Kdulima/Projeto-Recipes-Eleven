@@ -6,13 +6,32 @@ import DefaultLayout from '../components/DefaultLayout';
 
 export default function DoneRecipes() {
   const { doneRecipes, isMounted } = useContext(mainContext);
+
   const [recipesToShow, setRecipesToShow] = useState(doneRecipes);
+  const [showShareMessage, setShowShareMessage] = useState(false);
+
+  async function copyRecipeDetailUrl(id, type) {
+    const baseUrl = document.URL.split('receitas-feitas')[0];
+
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(`${baseUrl}${type}s/${id}`);
+      setShowShareMessage(true);
+    }
+  }
 
   useEffect(() => setRecipesToShow(doneRecipes), [doneRecipes]);
 
+  function handleCopyMessage() {
+    const TIMER = 2000;
+
+    setTimeout(() => setShowShareMessage(false), TIMER);
+    return <span>Link copiado!</span>;
+  }
+
   return isMounted && (
     <DefaultLayout pathname="/receitas-feitas">
-      {console.log(recipesToShow)}
+      {console.log(doneRecipes)}
+      {showShareMessage && handleCopyMessage()}
       <div>
         <button
           data-testid="filter-by-all-btn"
@@ -37,7 +56,7 @@ export default function DoneRecipes() {
       <div>
         {recipesToShow.map((recipe, index) => {
           const {
-            image, name, area, category, doneDate, tags, alcoholicOrNot,
+            id, type, image, name, area, category, doneDate, tags, alcoholicOrNot,
           } = recipe;
           return (
             <div key={ index }>
@@ -59,6 +78,7 @@ export default function DoneRecipes() {
                 data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
                 type="button"
+                onClick={ () => copyRecipeDetailUrl(id, type) }
               >
                 <img src={ shareIcon } alt="Share Icon" />
               </button>
