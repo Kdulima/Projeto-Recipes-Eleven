@@ -1,19 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import mainContext from '../../contexts/mainContext';
-
-import '../../styles/RecipeDetail.css';
-
 import { getRecipeDetails, getRecipesByName } from '../../services/recipesAPI';
-
+import mainContext from '../../contexts/mainContext';
 import DefaultLayout from '../../components/DefaultLayout';
 import RecipeVideo from './components/RecipeVideo';
 import IngredientsList from './components/IngredientsList';
 import RecommendationsList from './components/RecommendationsList';
 import FavoriteBtn from './components/FavoriteBtn';
-import StartRecipeBtn from './components/StartRecipeBtn';
+import RecipeBtn from './components/RecipeBtn';
 import ShareBtn from './components/ShareBtn';
+import '../../styles/RecipeDetail.css';
 
+const getIngredients = (recipeDetail) => {
+  const allKeys = Object.keys(recipeDetail);
+  const ingredientKeys = allKeys.filter((key) => key.includes('strIngredient'));
+  return ingredientKeys.filter(
+    (ingredient) => recipeDetail[ingredient],
+  );
+};
 export default function RecipeDetails({ match, location, history }) {
   const {
     isMounted,
@@ -25,6 +29,7 @@ export default function RecipeDetails({ match, location, history }) {
   const [recommendations, setRecommendatios] = useState([]);
 
   const idURL = match.params.id;
+  const isInProgress = match.url.includes('in-progress');
   const {
     [`str${idType}`]: recipeTitle,
     [`str${idType}Thumb`]: recipePhoto,
@@ -34,6 +39,7 @@ export default function RecipeDetails({ match, location, history }) {
     strInstructions,
     strYoutube,
   } = recipeDetail;
+  const ingredients = getIngredients(recipeDetail);
 
   useEffect(() => {
     async function getDetails() {
@@ -52,53 +58,67 @@ export default function RecipeDetails({ match, location, history }) {
     }
   }, [isMounted, idURL, recipesType]);
 
-  return isMounted && (
-    <DefaultLayout pathname={ location.pathname } hideAll>
-      <img
-        data-testid="recipe-photo"
-        width="200"
-        src={ recipePhoto }
-        alt={ recipeTitle }
-      />
-      <p data-testid="recipe-title">{recipeTitle}</p>
-
-      <ShareBtn />
-      <FavoriteBtn
-        idURL={ idURL }
-        recipeDetail={ {
-          id: idURL,
-          type: recipesType === 'drinks' ? 'bebida' : 'comida',
-          area: strArea || '',
-          category: strCategory,
-          alcoholicOrNot: strAlcoholic || '',
-          name: recipeTitle,
-          image: recipePhoto,
-        } }
-      />
-
-      <p data-testid="recipe-category">
-        {`${strCategory} ${strAlcoholic || ''}`}
-      </p>
-
-      <IngredientsList recipeDetail={ recipeDetail } />
-
-      <p data-testid="instructions">{strInstructions}</p>
-
-      {strYoutube && <RecipeVideo
-        strYoutube={ strYoutube }
-        recipesType={ recipesType }
-        recipeTitle={ recipeTitle }
-      />}
-
-      <div className="recommendation-list">
-        <RecommendationsList
-          recommendations={ recommendations }
-          recipesType={ recipesType }
+  return (
+    isMounted && (
+      <DefaultLayout pathname={ location.pathname } hideAll>
+        <img
+          data-testid="recipe-photo"
+          width="200"
+          src={ recipePhoto }
+          alt={ recipeTitle }
         />
-      </div>
+        <p data-testid="recipe-title">{recipeTitle}</p>
 
-      <StartRecipeBtn idURL={ idURL } history={ history } />
-    </DefaultLayout>
+        <ShareBtn />
+        <FavoriteBtn
+          idURL={ idURL }
+          recipeDetail={ {
+            id: idURL,
+            type: recipesType === 'drinks' ? 'bebida' : 'comida',
+            area: strArea || '',
+            category: strCategory,
+            alcoholicOrNot: strAlcoholic || '',
+            name: recipeTitle,
+            image: recipePhoto,
+          } }
+        />
+
+        <p data-testid="recipe-category">
+          {`${strCategory} ${strAlcoholic || ''}`}
+        </p>
+
+        <IngredientsList
+          recipeDetail={ recipeDetail }
+          ingredients={ ingredients }
+          id={ idURL }
+          isInProgress={ isInProgress }
+        />
+
+        <p data-testid="instructions">{strInstructions}</p>
+
+        {strYoutube && (
+          <RecipeVideo
+            strYoutube={ strYoutube }
+            recipesType={ recipesType }
+            recipeTitle={ recipeTitle }
+          />
+        )}
+
+        <div className="recommendation-list">
+          <RecommendationsList
+            recommendations={ recommendations }
+            recipesType={ recipesType }
+          />
+        </div>
+
+        <RecipeBtn
+          idURL={ idURL }
+          history={ history }
+          ingredientsLength={ ingredients.length }
+          isInProgress={ isInProgress }
+        />
+      </DefaultLayout>
+    )
   );
 }
 
@@ -107,6 +127,7 @@ RecipeDetails.propTypes = ({
     params: PropTypes.shape({
       id: PropTypes.string,
     }),
+    url: PropTypes.string.isRequired,
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,

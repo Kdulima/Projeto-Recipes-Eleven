@@ -99,7 +99,8 @@ export default function MainProvider({ children }) {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   }, [inProgressRecipes]);
 
-  function addInProgressRecipe(id, type) {
+  function addInProgressRecipe(id) {
+    const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
     setInProgressRecipes((prevState) => ({
       ...prevState,
       [type]: {
@@ -107,6 +108,14 @@ export default function MainProvider({ children }) {
         [id]: [],
       },
     }));
+  }
+
+  function removeInProgressRecipe(id) {
+    const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
+    setInProgressRecipes((prevState) => {
+      delete prevState[type][id];
+      return { ...prevState };
+    });
   }
 
   function handleInFavorites(recipeDetail) {
@@ -144,6 +153,7 @@ export default function MainProvider({ children }) {
         handleInFavorites,
         inProgressRecipes,
         addInProgressRecipe,
+        removeInProgressRecipe,
       } }
     >
       {children}

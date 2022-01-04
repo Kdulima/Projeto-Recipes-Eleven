@@ -8,7 +8,6 @@ export default function RecommendationsList({ recommendations, recipesType }) {
   const pathToSend = recipesType === 'meals' ? '/bebidas' : '/comidas';
 
   return recommendations.map((recipe, index) => {
-    console.log(recipe);
     if (index < MAX_LENGTH) {
       return (
         <Link
