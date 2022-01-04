@@ -9,17 +9,23 @@ import {
 } from '../services/recipesAPI';
 
 export default function MainProvider({ children }) {
-  const [categoryToFilter, setCategoryToFilter] = useState('');
   const [isFetching, setIsFetching] = useState(false);
-  const [recipes, setRecipes] = useState([]);
   const [isMounted, setIsMounted] = useState(false);
   const [canTryRedirect, setCanTryRedirect] = useState(true);
 
+  const [categoryToFilter, setCategoryToFilter] = useState('');
+  const [recipes, setRecipes] = useState([]);
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
   //  recipesType sempre 'meals' ou 'drinks'
   const [recipesType, setRecipesType] = useState('meals');
+  const [idType, setIdType] = useState('idMeal');
   const [recipesBy, setRecipesBy] = useState({
     searchInput: '', searchType: 'name',
   });
+
+  useEffect(() => setIsMounted(true), []);
 
   function handleResponse(response) {
     if (response !== null) {
@@ -77,19 +83,67 @@ export default function MainProvider({ children }) {
     }
   }, [categoryToFilter, recipesType, isMounted]);
 
+  useEffect(() => {
+    if (!isMounted) {
+      const doneList = localStorage.getItem('doneRecipes');
+      const favoriteList = localStorage.getItem('favoriteRecipes');
+      const inProgressList = localStorage.getItem('inProgressRecipes');
+
+      setDoneRecipes(JSON.parse(doneList) || []);
+      setFavoriteRecipes(JSON.parse(favoriteList) || []);
+      setInProgressRecipes(JSON.parse(inProgressList) || {});
+    }
+  }, [isMounted]);
+
+  useEffect(() => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+  }, [inProgressRecipes]);
+
+  function addInProgressRecipe(id, type) {
+    setInProgressRecipes((prevState) => ({
+      ...prevState,
+      [type]: {
+        ...prevState[type],
+        [id]: [],
+      },
+    }));
+  }
+
+  function handleInFavorites(recipeDetail) {
+    setFavoriteRecipes((prevState) => {
+      if (prevState.some(({ id }) => id === recipeDetail.id)) {
+        return prevState.filter(({ id }) => id !== recipeDetail.id);
+      }
+      return [...prevState, recipeDetail];
+    });
+  }
+
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }, [favoriteRecipes]);
+
   return (
     <mainContext.Provider
       value={ {
-        recipesType,
-        setRecipesType,
-        recipesBy,
-        setRecipesBy,
         isFetching,
         recipes,
+        isMounted,
+        canTryRedirect,
+        doneRecipes,
+
+        recipesType,
+        setRecipesType,
+        idType,
+        setIdType,
+        recipesBy,
+        setRecipesBy,
         categoryToFilter,
         setCategoryToFilter,
-        canTryRedirect,
-        setIsMounted,
+        favoriteRecipes,
+        setFavoriteRecipes,
+        handleInFavorites,
+        inProgressRecipes,
+        addInProgressRecipe,
       } }
     >
       {children}

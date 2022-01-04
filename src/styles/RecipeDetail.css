@@ -1,0 +1,30 @@
+.recommendation-list {
+  display: flex;
+  margin: auto;
+  overflow-x: scroll;
+  width: 100vw;
+}
+
+.recommendation-list > a {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 55vw;
+}
+
+.recommendation-list > a > img {
+  width: 100px;
+}
+
+.start-recipe-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 15%;
+}
+
+.start-recipe-btn {
+  bottom: 0;
+  margin: auto;
+  position: fixed;
+}

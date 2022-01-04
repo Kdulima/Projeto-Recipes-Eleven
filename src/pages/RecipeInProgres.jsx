@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function DrinkInProgress() {
-  return (<p>xablau</p>);
+export default function RecipeInProgress() {
+  return (<p>Receita em progresso</p>);
 }

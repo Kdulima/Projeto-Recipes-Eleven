@@ -5,52 +5,70 @@ const RECIPES_BY_INGREDIENT = 'filter.php?i=';
 const RECIPES_BY_NAME = 'search.php?s=';
 const RECIPES_BY_FIRST_LETTER = 'search.php?f=';
 const RECIPES_BY_CATEGORY = 'filter.php?c=';
+const RECIPES_DETAIL_BY_ID = 'lookup.php?i=';
+const RECIPES_CATEGORIES = 'list.php?c=list';
 
-export const getRecipesByIngredient = async (ingredient, recipeType) => {
+const setLinkToFetch = (recipeType) => {
   let linkToFetch = null;
 
   if (recipeType === 'meals') linkToFetch = BASE_MEALS_API_URL;
   if (recipeType === 'drinks') linkToFetch = BASE_DRINKS_API_URL;
 
-  const response = await fetch(`${linkToFetch}${RECIPES_BY_INGREDIENT}${ingredient}`);
+  return linkToFetch;
+};
+
+const getApiData = async (url) => {
+  const response = await fetch(url);
   const data = await response.json();
+  return data;
+};
+
+export const getRecipesByIngredient = async (ingredient, recipeType) => {
+  const linkToFetch = setLinkToFetch(recipeType);
+  const data = await getApiData(`${linkToFetch}${RECIPES_BY_INGREDIENT}${ingredient}`);
+
   return data[recipeType];
 };
 
 export const getRecipesByName = async (name, recipeType) => {
-  let linkToFetch = null;
+  const linkToFetch = setLinkToFetch(recipeType);
 
-  if (recipeType === 'meals') linkToFetch = BASE_MEALS_API_URL;
-  if (recipeType === 'drinks') linkToFetch = BASE_DRINKS_API_URL;
-
-  linkToFetch = `${linkToFetch}${RECIPES_BY_NAME}${name}`;
-
-  const response = await fetch(linkToFetch);
-  const data = await response.json();
+  const data = await getApiData(`${linkToFetch}${RECIPES_BY_NAME}${name}`);
   return data[recipeType];
 };
 
 export const getRecipesByFirstLetter = async (firstLetter, recipeType) => {
-  let linkToFetch = null;
+  const linkToFetch = setLinkToFetch(recipeType);
 
-  if (recipeType === 'meals') linkToFetch = BASE_MEALS_API_URL;
-  if (recipeType === 'drinks') linkToFetch = BASE_DRINKS_API_URL;
-
-  const response = await fetch(`${linkToFetch}${RECIPES_BY_FIRST_LETTER}${firstLetter}`);
-  const data = await response.json();
+  const data = await getApiData(`${linkToFetch}${RECIPES_BY_FIRST_LETTER}${firstLetter}`);
   return data[recipeType];
 };
 
 export const getRecipesByCategory = async (category = 'cocktail', recipeType) => {
   try {
-    let linkToFetch = null;
+    const linkToFetch = setLinkToFetch(recipeType);
 
-    if (recipeType === 'meals') linkToFetch = BASE_MEALS_API_URL;
-    if (recipeType === 'drinks') linkToFetch = BASE_DRINKS_API_URL;
-    const response = await fetch(`${linkToFetch}${RECIPES_BY_CATEGORY}${category}`);
-    const data = await response.json();
+    const data = await getApiData(`${linkToFetch}${RECIPES_BY_CATEGORY}${category}`);
     return data[recipeType];
   } catch (err) {
     return undefined;
   }
+};
+
+export const getRecipeDetails = async (recipeId, recipeType) => {
+  const linkToFetch = setLinkToFetch(recipeType);
+  const data = await getApiData(`${linkToFetch}${RECIPES_DETAIL_BY_ID}${recipeId}`);
+
+  if (data[recipeType]) {
+    return data[recipeType];
+  }
+
+  return [{}];
+};
+
+export const getRecipeCategories = async (recipeType) => {
+  const linkToFetch = setLinkToFetch(recipeType);
+  const data = await getApiData(`${linkToFetch}${RECIPES_CATEGORIES}`);
+
+  return data[recipeType];
 };
