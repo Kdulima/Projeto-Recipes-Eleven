@@ -21,7 +21,6 @@ export default function DoneRecipes({ history }) {
   }
 
   useEffect(() => setRecipesToShow(doneRecipes), [doneRecipes]);
-  useEffect(() => console.log(recipesToShow), [recipesToShow]);
 
   function handleCopyMessage() {
     const TIMER = 2000;
@@ -73,9 +72,8 @@ export default function DoneRecipes({ history }) {
           const {
             id, type, image, name, area, category, doneDate, tags, alcoholicOrNot,
           } = recipe;
-          // console.log(recipesToShow);
           return (
-            <div key={ index }>
+            <div key={ id }>
               <button
                 type="button"
                 onClick={ () => history.push(`/${type}s/${id}`) }
@@ -84,6 +82,7 @@ export default function DoneRecipes({ history }) {
                   data-testid={ `${index}-horizontal-image` }
                   src={ image }
                   alt={ name }
+                  width="200"
                 />
               </button>
 
