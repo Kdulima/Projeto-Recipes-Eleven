@@ -15,7 +15,7 @@ export function handleHeaderName(string) {
   return string;
 }
 
-export function getPageName(pathname, setPageName) {
+export function treatPathname(pathname) {
   const pageName = pathname
     .split('/')
     .join(' ')
@@ -23,5 +23,8 @@ export function getPageName(pathname, setPageName) {
     .join(' ')
     .trim();
 
-  setPageName(pageName);
+  return handleHeaderName(pageName)
+    .split(' ')
+    .map((letters) => capitalize(letters))
+    .join(' ');
 }

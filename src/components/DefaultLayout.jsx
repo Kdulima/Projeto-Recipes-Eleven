@@ -4,37 +4,40 @@ import Footer from './Footer';
 import '../styles/Footer.css';
 import '../styles/Header.css';
 import Header from './Header';
-import { getPageName } from '../helpers';
+import { treatPathname } from '../helpers';
 import mainContext from '../contexts/mainContext';
 
 export default function DefaultLayout({ children, pathname = '' }) {
-  const { setPageName, setRecipesType } = useContext(mainContext);
+  const pageName = treatPathname(pathname);
+  const { setRecipesType } = useContext(mainContext);
+
   const [isFooterVisible, setIsFooterVisible] = useState(true);
 
   useEffect(() => {
-    getPageName(pathname, setPageName);
-
     if (pathname.includes('comida')) {
       setRecipesType('meals');
     }
-
     if (pathname.includes('bebida')) {
       setRecipesType('drinks');
     }
 
-    const routesToHideFooter = ['receitas-feitas', 'receitas-favoritas'];
-    if (routesToHideFooter.includes(pathname)) {
+    const routesToHideFooter = [
+      'Receitas Feitas',
+      'Receitas Favoritas',
+    ];
+
+    if (routesToHideFooter.includes(pageName)) {
       setIsFooterVisible(false);
     }
-  }, [pathname, setPageName, setRecipesType]);
+  }, [pathname, setRecipesType, pageName]);
 
   return (
     <>
-      <Header />
+      <Header pageName={ pageName } />
       <main>
         {children}
       </main>
-      {(isFooterVisible) && <Footer />}
+      {isFooterVisible && <Footer />}
     </>
   );
 }

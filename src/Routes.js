@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
+import List from './pages/List/index';
 import Login from './pages/Login';
-import List from './pages/List/List';
 import RecipeDetails from './pages/RecipeDetails';
 import RecipeInProgress from './pages/RecipeInProgres';
 import Explore from './pages/Explore';
