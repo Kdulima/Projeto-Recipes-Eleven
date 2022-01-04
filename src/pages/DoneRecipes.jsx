@@ -1,13 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import mainContext from '../contexts/mainContext';
+import shareIcon from '../images/shareIcon.svg';
 import DefaultLayout from '../components/DefaultLayout';
 
 export default function DoneRecipes() {
   const { doneRecipes, isMounted } = useContext(mainContext);
+  const [recipesToShow, setRecipesToShow] = useState(doneRecipes);
+
+  useEffect(() => setRecipesToShow(doneRecipes), [doneRecipes]);
+
   return isMounted && (
     <DefaultLayout pathname="/receitas-feitas">
-      {console.log(doneRecipes)}
+      {console.log(recipesToShow)}
       <div>
         <button
           data-testid="filter-by-all-btn"
@@ -30,8 +35,10 @@ export default function DoneRecipes() {
       </div>
 
       <div>
-        {doneRecipes.map((recipe, index) => {
-          const { image, name, category, doneDate, tags } = recipe;
+        {recipesToShow.map((recipe, index) => {
+          const {
+            image, name, area, category, doneDate, tags, alcoholicOrNot,
+          } = recipe;
           return (
             <div key={ index }>
               <img
@@ -39,15 +46,21 @@ export default function DoneRecipes() {
                 alt={ name }
                 data-testid={ `${index}-horizontal-image` }
               />
-              <p data-testid={ `${index}-horizontal-top-text` }>{category}</p>
+              <p data-testid={ `${index}-horizontal-top-text` }>
+                {area && `${area} - `}
+                {category}
+                {alcoholicOrNot && ' - Alcoholic'}
+              </p>
               <p data-testid={ `${index}-horizontal-name` }>{name}</p>
               <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
 
+              {/* O teste verifica o src do botão */}
               <button
                 data-testid={ `${index}-horizontal-share-btn` }
+                src={ shareIcon }
                 type="button"
               >
-                Compartilhar
+                <img src={ shareIcon } alt="Share Icon" />
               </button>
 
               {tags.map((tag) => (
