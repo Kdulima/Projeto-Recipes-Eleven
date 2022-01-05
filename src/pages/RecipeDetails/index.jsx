@@ -19,17 +19,18 @@ const getIngredients = (recipeDetail) => {
   );
 };
 export default function RecipeDetails({ match, location, history }) {
-  const {
-    isMounted,
-    recipesType,
-    idType,
-  } = useContext(mainContext);
+  const { isMounted, recipesType, idType, inProgressRecipes } = useContext(mainContext);
 
   const [recipeDetail, setRecipeDetail] = useState({});
   const [recommendations, setRecommendatios] = useState([]);
 
   const idURL = match.params.id;
+
+  const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
   const isInProgress = match.url.includes('in-progress');
+  const hasPreviousProgress = inProgressRecipes[type]
+    && inProgressRecipes[type][idURL];
+
   const {
     [`str${idType}`]: recipeTitle,
     [`str${idType}Thumb`]: recipePhoto,
@@ -116,6 +117,7 @@ export default function RecipeDetails({ match, location, history }) {
           history={ history }
           ingredientsLength={ ingredients.length }
           isInProgress={ isInProgress }
+          hasPreviousProgress={ hasPreviousProgress }
         />
       </DefaultLayout>
     )

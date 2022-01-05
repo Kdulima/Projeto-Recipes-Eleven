@@ -99,13 +99,13 @@ export default function MainProvider({ children }) {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   }, [inProgressRecipes]);
 
-  function addInProgressRecipe(id) {
+  function setInProgressRecipe(id, progress = []) {
     const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
     setInProgressRecipes((prevState) => ({
       ...prevState,
       [type]: {
         ...prevState[type],
-        [id]: [],
+        [id]: progress,
       },
     }));
   }
@@ -139,7 +139,6 @@ export default function MainProvider({ children }) {
         isMounted,
         canTryRedirect,
         doneRecipes,
-
         recipesType,
         setRecipesType,
         idType,
@@ -152,7 +151,7 @@ export default function MainProvider({ children }) {
         setFavoriteRecipes,
         handleInFavorites,
         inProgressRecipes,
-        addInProgressRecipe,
+        setInProgressRecipe,
         removeInProgressRecipe,
       } }
     >

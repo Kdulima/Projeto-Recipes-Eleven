@@ -7,13 +7,16 @@ function handleRecipeBtn(
   recipesType,
   { idURL,
     isInProgress,
+    hasPreviousProgress,
     ingredientsLength },
-  { addInProgressRecipe,
+  { setInProgressRecipe,
     removeInProgressRecipe },
 ) {
   if (!isInProgress) {
-    const initialProgress = new Array(ingredientsLength).fill(false);
-    addInProgressRecipe(idURL, initialProgress);
+    if (!hasPreviousProgress) {
+      const initialProgress = new Array(ingredientsLength).fill(false);
+      setInProgressRecipe(idURL, initialProgress);
+    }
     if (recipesType === 'drinks') {
       return history.push(`/bebidas/${idURL}/in-progress`);
     }
@@ -28,12 +31,12 @@ export default function RecipeBtn({
   history,
   ingredientsLength,
   isInProgress,
+  hasPreviousProgress,
 }) {
   const {
     doneRecipes,
     recipesType,
-    inProgressRecipes,
-    addInProgressRecipe,
+    setInProgressRecipe,
     removeInProgressRecipe,
   } = useContext(mainContext);
 
@@ -41,17 +44,16 @@ export default function RecipeBtn({
     idURL,
     ingredientsLength,
     isInProgress,
+    hasPreviousProgress,
   };
   const handleRecipesFunctions = {
-    addInProgressRecipe,
+    setInProgressRecipe,
     removeInProgressRecipe,
   };
 
   function getButtonText() {
-    const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
     if (isInProgress) return 'Finalizar receita';
-    if (inProgressRecipes[type]
-      && inProgressRecipes[type][idURL]) return 'Continuar receita';
+    if (hasPreviousProgress) return 'Continuar Receita';
     return 'Iniciar receita';
   }
 
@@ -78,11 +80,13 @@ export default function RecipeBtn({
 
 RecipeBtn.defaultProps = {
   isInProgress: false,
+  hasPreviousProgress: false,
 };
 
 RecipeBtn.propTypes = {
   idURL: PropTypes.string.isRequired,
   isInProgress: PropTypes.bool,
+  hasPreviousProgress: PropTypes.bool,
   ingredientsLength: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,

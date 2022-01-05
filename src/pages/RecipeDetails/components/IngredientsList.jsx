@@ -1,8 +1,36 @@
-import React from 'react';
-// import React, { useContext } from 'react';
-// import mainContext from '../../../contexts/mainContext';
+import React, { useContext } from 'react';
+import mainContext from '../../../contexts/mainContext';
 
-export default function IngredientsList({ recipeDetail, ingredients, isInProgress }) {
+export default function IngredientsList({ id, recipeDetail, ingredients, isInProgress }) {
+  const { setInProgressRecipe, inProgressRecipes, recipesType } = useContext(mainContext);
+
+  function renderInput(index) {
+    const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
+    let checked = false;
+    if (
+      inProgressRecipes[type]
+      && inProgressRecipes[type][id]
+      && inProgressRecipes[type][id][index]
+    ) {
+      checked = true;
+    }
+    return (
+      <input
+        type="checkbox"
+        name="ingredient-step"
+        id={ `${index}-ingredient-step` }
+        checked={ checked }
+        onChange={ (e) => {
+          if (inProgressRecipes[type]) {
+            const ingredientsProgress = inProgressRecipes[type][id];
+            ingredientsProgress[index] = e.target.checked;
+            setInProgressRecipe(id, ingredientsProgress);
+          }
+        } }
+      />
+    );
+  }
+
   return ingredients.map((ingredient, index) => (
     <label
       key={ ingredient }
@@ -13,17 +41,7 @@ export default function IngredientsList({ recipeDetail, ingredients, isInProgres
           : `${index}-ingredient-name-and-measure`
       }
     >
-      {isInProgress && (
-        <input
-          type="checkbox"
-          name="ingredient-step"
-          id={ `${index}-ingredient-step` }
-          onChange={ () => {
-            // ingredientsProgress[index] = e.target.checked;
-            // addInProgressRecipe(id, ingredientsProgress);
-          } }
-        />
-      )}
+      {isInProgress && renderInput(index)}
       {recipeDetail[`strMeasure${index + 1}`]}
       {recipeDetail[ingredient]}
     </label>
