@@ -7,7 +7,7 @@ import shareIcon from '../images/shareIcon.svg';
 import DefaultLayout from '../components/DefaultLayout';
 import FavoriteBtn from '../components/FavoriteBtn';
 
-export default function DoneRecipes({ history, location }) {
+export default function DoneRecipes({ location }) {
   const { doneRecipes, favoriteRecipes, isMounted } = useContext(mainContext);
 
   const [recipesToShow, setRecipesToShow] = useState([]);
@@ -86,17 +86,14 @@ export default function DoneRecipes({ history, location }) {
           } = recipe;
           return (
             <div key={ id }>
-              <button
-                type="button"
-                onClick={ () => history.push(`/${type}s/${id}`) }
-              >
+              <Link to={ `/${type}s/${id}` }>
                 <img
                   data-testid={ `${index}-horizontal-image` }
                   src={ image }
                   alt={ name }
                   width="200"
                 />
-              </button>
+              </Link>
 
               <Link to={ `/${type}s/${id}` }>
                 <p data-testid={ `${index}-horizontal-name` }>{name}</p>
@@ -145,9 +142,6 @@ export default function DoneRecipes({ history, location }) {
 }
 
 DoneRecipes.propTypes = ({
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
