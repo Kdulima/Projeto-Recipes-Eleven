@@ -7,7 +7,7 @@ import shareIcon from '../images/shareIcon.svg';
 import DefaultLayout from '../components/DefaultLayout';
 import FavoriteBtn from '../components/FavoriteBtn';
 
-export default function DoneRecipes({ location }) {
+export default function DoneOrFavoriteRecipes({ location }) {
   const { doneRecipes, favoriteRecipes, isMounted } = useContext(mainContext);
 
   const [recipesToShow, setRecipesToShow] = useState([]);
