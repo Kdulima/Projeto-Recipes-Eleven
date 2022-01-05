@@ -6,7 +6,7 @@ import DefaultLayout from '../../components/DefaultLayout';
 import RecipeVideo from './components/RecipeVideo';
 import IngredientsList from './components/IngredientsList';
 import RecommendationsList from './components/RecommendationsList';
-import FavoriteBtn from './components/FavoriteBtn';
+import FavoriteBtn from '../../components/FavoriteBtn';
 import RecipeBtn from './components/RecipeBtn';
 import ShareBtn from './components/ShareBtn';
 import '../../styles/RecipeDetail.css';
@@ -94,6 +94,12 @@ export default function RecipeDetails({ match, location, history }) {
           id={ idURL }
           isInProgress={ isInProgress }
         />
+        <div className="recommendation-list">
+          <RecommendationsList
+            recommendations={ recommendations }
+            recipesType={ recipesType }
+          />
+        </div>
 
         <p data-testid="instructions">{strInstructions}</p>
 
@@ -104,13 +110,6 @@ export default function RecipeDetails({ match, location, history }) {
             recipeTitle={ recipeTitle }
           />
         )}
-
-        <div className="recommendation-list">
-          <RecommendationsList
-            recommendations={ recommendations }
-            recipesType={ recipesType }
-          />
-        </div>
 
         <RecipeBtn
           idURL={ idURL }
