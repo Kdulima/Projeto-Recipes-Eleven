@@ -12,7 +12,6 @@ export default function MainProvider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [canTryRedirect, setCanTryRedirect] = useState(true);
-
   const [categoryToFilter, setCategoryToFilter] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);

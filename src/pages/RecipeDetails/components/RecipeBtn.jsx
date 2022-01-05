@@ -32,6 +32,7 @@ export default function RecipeBtn({
   ingredientsLength,
   isInProgress,
   hasPreviousProgress,
+  previousProgress,
 }) {
   const {
     doneRecipes,
@@ -64,6 +65,7 @@ export default function RecipeBtn({
           data-testid={ isInProgress ? 'finish-recipe-btn' : 'start-recipe-btn' }
           className="start-recipe-btn"
           type="button"
+          disabled={ !previousProgress.every((ingr) => ingr) }
           onClick={ () => handleRecipeBtn(
             history,
             recipesType,
@@ -87,6 +89,7 @@ RecipeBtn.propTypes = {
   idURL: PropTypes.string.isRequired,
   isInProgress: PropTypes.bool,
   hasPreviousProgress: PropTypes.bool,
+  previousProgress: PropTypes.arrayOf(PropTypes.bool).isRequired,
   ingredientsLength: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,

@@ -28,8 +28,8 @@ export default function RecipeDetails({ match, location, history }) {
 
   const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
   const isInProgress = match.url.includes('in-progress');
-  const hasPreviousProgress = inProgressRecipes[type]
-    && inProgressRecipes[type][idURL];
+  const hasPreviousProgress = !!(inProgressRecipes[type]
+    && inProgressRecipes[type][idURL]);
 
   const {
     [`str${idType}`]: recipeTitle,
@@ -62,6 +62,7 @@ export default function RecipeDetails({ match, location, history }) {
   return (
     isMounted && (
       <DefaultLayout pathname={ location.pathname } hideAll>
+
         <img
           data-testid="recipe-photo"
           width="200"
@@ -82,6 +83,7 @@ export default function RecipeDetails({ match, location, history }) {
             name: recipeTitle,
             image: recipePhoto,
           } }
+          testid="favorite-btn"
         />
 
         <p data-testid="recipe-category">
@@ -94,6 +96,7 @@ export default function RecipeDetails({ match, location, history }) {
           id={ idURL }
           isInProgress={ isInProgress }
         />
+
         <div className="recommendation-list">
           <RecommendationsList
             recommendations={ recommendations }
@@ -117,6 +120,7 @@ export default function RecipeDetails({ match, location, history }) {
           ingredientsLength={ ingredients.length }
           isInProgress={ isInProgress }
           hasPreviousProgress={ hasPreviousProgress }
+          previousProgress={ hasPreviousProgress ? inProgressRecipes[type][idURL] : [] }
         />
       </DefaultLayout>
     )
