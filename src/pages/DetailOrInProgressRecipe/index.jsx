@@ -18,18 +18,21 @@ const getIngredients = (recipeDetail) => {
     (ingredient) => recipeDetail[ingredient],
   );
 };
-export default function RecipeDetails({ match, location, history }) {
-  const { isMounted, recipesType, idType, inProgressRecipes } = useContext(mainContext);
+export default function DetailOrInProgressRecipe({ match, location, history }) {
+  const {
+    isMounted,
+    recipesType,
+    idType,
+    inProgressRecipes,
+    handleInProgressRecipe,
+  } = useContext(mainContext);
 
   const [recipeDetail, setRecipeDetail] = useState({});
   const [recommendations, setRecommendatios] = useState([]);
 
   const idURL = match.params.id;
-
   const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
   const isInProgress = match.url.includes('in-progress');
-  const hasPreviousProgress = !!(inProgressRecipes[type]
-    && inProgressRecipes[type][idURL]);
 
   const {
     [`str${idType}`]: recipeTitle,
@@ -56,8 +59,11 @@ export default function RecipeDetails({ match, location, history }) {
     }
     if (isMounted) {
       getDetails();
+      if (!inProgressRecipes[type]) {
+        handleInProgressRecipe(idURL);
+      }
     }
-  }, [isMounted, idURL, recipesType]);
+  }, [isMounted, idURL, recipesType, inProgressRecipes, handleInProgressRecipe, type]);
 
   return (
     isMounted && (
@@ -74,7 +80,7 @@ export default function RecipeDetails({ match, location, history }) {
         <ShareBtn />
         <FavoriteBtn
           idURL={ idURL }
-          recipeDetail={ {
+          recipe={ {
             id: idURL,
             type: recipesType === 'drinks' ? 'bebida' : 'comida',
             area: strArea || '',
@@ -119,15 +125,14 @@ export default function RecipeDetails({ match, location, history }) {
           history={ history }
           ingredientsLength={ ingredients.length }
           isInProgress={ isInProgress }
-          hasPreviousProgress={ hasPreviousProgress }
-          previousProgress={ hasPreviousProgress ? inProgressRecipes[type][idURL] : [] }
+          type={ type }
         />
       </DefaultLayout>
     )
   );
 }
 
-RecipeDetails.propTypes = ({
+DetailOrInProgressRecipe.propTypes = ({
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
