@@ -11,15 +11,11 @@ export default function IngredientsList({ id, recipeDetail, ingredients, isInPro
   function renderInput(index, ingredient) {
     const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
     const progressType = inProgressRecipes[type];
-    let checked = false;
-    if (progressType && progressType[id].includes(ingredient)) {
-      checked = true;
-    }
     return (
       <input
         type="checkbox"
         id={ `${index}-ingredient-step` }
-        checked={ checked }
+        checked={ progressType && progressType[id].includes(ingredient) }
         onClick={ (e) => {
           if (e.target.checked) {
             handleInProgressRecipe(id, [...progressType[id], ingredient]);
