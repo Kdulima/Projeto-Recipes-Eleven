@@ -13,6 +13,7 @@ export default function DoneRecipes({ history, location }) {
   const [recipesToShow, setRecipesToShow] = useState([]);
   const [showShareMessage, setShowShareMessage] = useState(false);
   const [isInDonePage, setIsInDonePage] = useState(true);
+  const pageName = isInDonePage ? 'feitas' : 'favoritas';
 
   useEffect(() => {
     if (location.pathname.includes('receitas-favoritas')) {
@@ -23,8 +24,7 @@ export default function DoneRecipes({ history, location }) {
   }, [doneRecipes, favoriteRecipes, location.pathname]);
 
   async function copyRecipeDetailUrl(id, type) {
-    const namePage = isInDonePage ? 'feitas' : 'favoritas';
-    const baseURL = document.URL.split(`receitas-${namePage}`)[0];
+    const baseURL = document.URL.split(`receitas-${pageName}`)[0];
 
     if (navigator.clipboard) {
       await navigator.clipboard.writeText(`${baseURL}${type}s/${id}`);
@@ -41,23 +41,17 @@ export default function DoneRecipes({ history, location }) {
   }
 
   function handleFilter({ target }) {
-    if (isInDonePage) {
-      if (target.name) {
-        return setRecipesToShow(doneRecipes
-          .filter(({ type }) => type === target.name));
-      }
-      return setRecipesToShow(doneRecipes);
-    }
+    const baseList = isInDonePage ? doneRecipes : favoriteRecipes;
 
     if (target.name) {
-      return setRecipesToShow(favoriteRecipes
+      return setRecipesToShow(baseList
         .filter(({ type }) => type === target.name));
     }
-    setRecipesToShow(favoriteRecipes);
+    setRecipesToShow(baseList);
   }
 
   return isMounted && (
-    <DefaultLayout pathname="/receitas-feitas">
+    <DefaultLayout pathname={ `/receitas-${pageName}` }>
       {showShareMessage && handleCopyMessage()}
       <div>
         <button
