@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import mainContext from '../../../contexts/mainContext';
+import mainContext from '../contexts/mainContext';
 
-import whiteHeartIcon from '../../../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../../../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-export default function FavoriteBtn({ idURL, recipeDetail }) {
+export default function FavoriteBtn({ idURL, recipe, testid }) {
   const { favoriteRecipes, handleInFavorites } = useContext(mainContext);
   return (
     <button
       type="button"
-      data-testid="favorite-btn"
-      onClick={ () => handleInFavorites(recipeDetail) }
+      data-testid={ testid }
+      onClick={ () => handleInFavorites(recipe) }
       // O teste valida o SRC do botão, mas esse SRC não mostra o coração dentro do botão
       // por isso ainda mantive a <img>, creio que irão remover esse SRC do botão nos testes.
       src={ favoriteRecipes.some(({ id }) => id === idURL) ? (
@@ -27,5 +27,11 @@ export default function FavoriteBtn({ idURL, recipeDetail }) {
 
 FavoriteBtn.propTypes = ({
   idURL: PropTypes.string.isRequired,
-  recipeDetail: PropTypes.objectOf(PropTypes.string).isRequired,
+  recipe: PropTypes.objectOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+  ).isRequired,
+  testid: PropTypes.string.isRequired,
 });

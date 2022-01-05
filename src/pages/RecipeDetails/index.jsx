@@ -10,7 +10,7 @@ import DefaultLayout from '../../components/DefaultLayout';
 import RecipeVideo from './components/RecipeVideo';
 import IngredientsList from './components/IngredientsList';
 import RecommendationsList from './components/RecommendationsList';
-import FavoriteBtn from './components/FavoriteBtn';
+import FavoriteBtn from '../../components/FavoriteBtn';
 import StartRecipeBtn from './components/StartRecipeBtn';
 import ShareBtn from './components/ShareBtn';
 
@@ -65,7 +65,8 @@ export default function RecipeDetails({ match, location, history }) {
       <ShareBtn />
       <FavoriteBtn
         idURL={ idURL }
-        recipeDetail={ {
+        testid="favorite-btn"
+        recipe={ {
           id: idURL,
           type: recipesType === 'drinks' ? 'bebida' : 'comida',
           area: strArea || '',
