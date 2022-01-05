@@ -9,8 +9,7 @@ import ExploreRecipes from './pages/ExploreRecipes';
 import Ingredients from './pages/Ingredients';
 import ExploreArea from './pages/ExploreArea';
 import Profile from './pages/Profile';
-import DoneRecipes from './pages/DoneRecipes';
-import Favorites from './pages/Favorites';
+import DoneOrFavoriteRecipes from './pages/DoneOrFavoriteRecipes';
 
 export default function Routes() {
   return (
@@ -29,8 +28,8 @@ export default function Routes() {
       <Route path="/explorar/bebidas/ingredientes" component={ Ingredients } />
       <Route path="/explorar/comidas/area" component={ ExploreArea } />
       <Route path="/perfil" component={ Profile } />
-      <Route path="/receitas-feitas" component={ DoneRecipes } />
-      <Route path="/receitas-favoritas" component={ Favorites } />
+      <Route path="/receitas-feitas" component={ DoneOrFavoriteRecipes } />
+      <Route path="/receitas-favoritas" component={ DoneOrFavoriteRecipes } />
     </Switch>
   );
 }

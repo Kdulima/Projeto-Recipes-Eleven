@@ -5,22 +5,32 @@ import PropTypes from 'prop-types';
 import mainContext from '../contexts/mainContext';
 import shareIcon from '../images/shareIcon.svg';
 import DefaultLayout from '../components/DefaultLayout';
+import FavoriteBtn from '../components/FavoriteBtn';
 
-export default function DoneRecipes({ history }) {
-  const { doneRecipes, isMounted } = useContext(mainContext);
+export default function DoneRecipes({ history, location }) {
+  const { doneRecipes, favoriteRecipes, isMounted } = useContext(mainContext);
 
   const [recipesToShow, setRecipesToShow] = useState([]);
   const [showShareMessage, setShowShareMessage] = useState(false);
+  const [isInDonePage, setIsInDonePage] = useState(true);
+
+  useEffect(() => {
+    if (location.pathname.includes('receitas-favoritas')) {
+      setIsInDonePage(false);
+      return setRecipesToShow(favoriteRecipes);
+    }
+    setRecipesToShow(doneRecipes);
+  }, [doneRecipes, favoriteRecipes, location.pathname]);
 
   async function copyRecipeDetailUrl(id, type) {
-    const baseURL = document.URL.split('receitas-feitas')[0];
+    const namePage = isInDonePage ? 'feitas' : 'favoritas';
+    const baseURL = document.URL.split(`receitas-${namePage}`)[0];
+
     if (navigator.clipboard) {
       await navigator.clipboard.writeText(`${baseURL}${type}s/${id}`);
       setShowShareMessage(true);
     }
   }
-
-  useEffect(() => setRecipesToShow(doneRecipes), [doneRecipes]);
 
   function handleCopyMessage() {
     const TIMER = 2000;
@@ -31,11 +41,19 @@ export default function DoneRecipes({ history }) {
   }
 
   function handleFilter({ target }) {
+    if (isInDonePage) {
+      if (target.name) {
+        return setRecipesToShow(doneRecipes
+          .filter(({ type }) => type === target.name));
+      }
+      return setRecipesToShow(doneRecipes);
+    }
+
     if (target.name) {
-      return setRecipesToShow(doneRecipes
+      return setRecipesToShow(favoriteRecipes
         .filter(({ type }) => type === target.name));
     }
-    setRecipesToShow(doneRecipes);
+    setRecipesToShow(favoriteRecipes);
   }
 
   return isMounted && (
@@ -96,7 +114,9 @@ export default function DoneRecipes({ history }) {
                 {alcoholicOrNot && ' - Alcoholic'}
               </p>
 
-              <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
+              {isInDonePage && (
+                <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
+              )}
 
               {/* O teste verifica o src do botão */}
               <button
@@ -108,7 +128,13 @@ export default function DoneRecipes({ history }) {
                 <img src={ shareIcon } alt="Share Icon" />
               </button>
 
-              {tags.map((tag) => (
+              <FavoriteBtn
+                idURL={ id }
+                testid={ `${index}-horizontal-favorite-btn` }
+                recipe={ recipe }
+              />
+
+              {isInDonePage && tags.map((tag) => (
                 <span
                   key={ tag }
                   data-testid={ `${index}-${tag}-horizontal-tag` }
@@ -127,5 +153,8 @@ export default function DoneRecipes({ history }) {
 DoneRecipes.propTypes = ({
   history: PropTypes.shape({
     push: PropTypes.func,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
   }).isRequired,
 });
