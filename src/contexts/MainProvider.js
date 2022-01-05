@@ -96,7 +96,7 @@ export default function MainProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-  }, [inProgressRecipes]);
+  }, [inProgressRecipes, isMounted]);
 
   function handleInProgressRecipe(id, progress = []) {
     if (isMounted) {
@@ -129,8 +129,10 @@ export default function MainProvider({ children }) {
   }
 
   useEffect(() => {
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-  }, [favoriteRecipes]);
+    if (isMounted) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    }
+  }, [favoriteRecipes, isMounted]);
 
   return (
     <mainContext.Provider
