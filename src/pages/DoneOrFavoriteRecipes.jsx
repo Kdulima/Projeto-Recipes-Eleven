@@ -141,7 +141,7 @@ export default function DoneOrFavoriteRecipes({ location }) {
   );
 }
 
-DoneRecipes.propTypes = ({
+DoneOrFavoriteRecipes.propTypes = ({
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
