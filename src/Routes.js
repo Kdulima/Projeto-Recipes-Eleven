@@ -4,7 +4,7 @@ import List from './pages/List/index';
 import Login from './pages/Login';
 import DetailOrInProgressRecipe from './pages/DetailOrInProgressRecipe';
 import Explore from './pages/Explore';
-import ExploreRecipes from './pages/ExploreRecipes';
+// import ExploreRecipes from './pages/ExploreRecipes';
 import Ingredients from './pages/Ingredients';
 import ExploreFoodOrDrinks from './pages/ExploreFoodOrDrinks';
 import Profile from './pages/Profile';
@@ -21,8 +21,8 @@ export default function Routes() {
       <Route exact path="/comidas" component={ List } />
       <Route exact path="/bebidas" component={ List } />
       <Route exact path="/explorar" component={ Explore } />
-      <Route exact path="/explorar/comidas" component={ ExploreRecipes } />
-      <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />
+      <Route exact path="/explorar/comidas" component={ ExploreFoodOrDrinks } />
+      <Route exact path="/explorar/bebidas" component={ ExploreFoodOrDrinks } />
       <Route path="/explorar/comidas/ingredientes" component={ Ingredients } />
       <Route path="/explorar/bebidas/ingredientes" component={ Ingredients } />
       <Route path="/explorar/comidas/area" component={ ExploreFoodOrDrinks } />

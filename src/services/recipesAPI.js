@@ -7,6 +7,7 @@ const RECIPES_BY_FIRST_LETTER = 'search.php?f=';
 const RECIPES_BY_CATEGORY = 'filter.php?c=';
 const RECIPES_DETAIL_BY_ID = 'lookup.php?i=';
 const RECIPES_CATEGORIES = 'list.php?c=list';
+const RANDOM_RECIPE = 'random.php';
 
 const setLinkToFetch = (recipeType) => {
   let linkToFetch = null;
@@ -71,4 +72,15 @@ export const getRecipeCategories = async (recipeType) => {
   const data = await getApiData(`${linkToFetch}${RECIPES_CATEGORIES}`);
 
   return data[recipeType];
+};
+
+export const getRandomRecipeId = async (recipeType) => {
+  const type = recipeType === 'comidas'
+    ? { id: 'idMeal', name: 'meals' }
+    : { id: 'idDrink', name: 'drinks' };
+
+  const linkToFetch = setLinkToFetch(type.name);
+  const data = await getApiData(`${linkToFetch}${RANDOM_RECIPE}`);
+
+  return data[type.name][0][type.id];
 };
