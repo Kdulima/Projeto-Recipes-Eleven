@@ -8,7 +8,9 @@ export default function ShareBtn() {
   async function copyPageUrl() {
     // Na primeira vez que roda, tende a dar erro.
     if (navigator.clipboard) {
-      await navigator.clipboard.writeText(document.URL);
+      const { URL } = document;
+      const treatedURL = URL.replace('/in-progress', '');
+      await navigator.clipboard.writeText(treatedURL);
       setShowShareMessage(true);
     }
   }
