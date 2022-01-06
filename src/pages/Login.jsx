@@ -48,7 +48,7 @@ export default function Login({ history }) {
       </header>
       <Container fluid className="form">
         <form onSubmit={ handleLogin }>
-          <Row fluid className="flex">
+          <Row className="flex">
             <input
               className="input"
               type="email"

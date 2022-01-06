@@ -1,37 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { Col, Container, Row } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-
-import { capitalize, handleHeaderName } from '../helpers';
-import mainContext from '../contexts/mainContext';
-
 import HeaderSearchBar from './HeaderSearchBar';
 
-export default function Header() {
-  const { pageName } = useContext(mainContext);
-  const [treatedPageName, setTreatedPageName] = useState('');
+const pagesCanShowSearch = [
+  'Comidas', 'Bebidas', 'Explorar Origem', 'Explorar Origem',
+];
+export default function Header({ pageName }) {
   const [isSearchVisible, setIsSearchVisible] = useState(true);
   const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Lida com nome da pagina e visibilidade dos icones
   useEffect(() => {
-    const pagesCanShowSearch = [
-      'Comidas', 'Bebidas', 'Explorar Origem', 'Explorar Origem',
-    ];
-
-    const capitalizePageName = handleHeaderName(pageName)
-      .split(' ')
-      .map((letters) => capitalize(letters))
-      .join(' ');
-
-    const canShowSearch = pagesCanShowSearch.includes(capitalizePageName);
-
-    setIsSearchVisible(canShowSearch);
-    setTreatedPageName(capitalizePageName);
-  }, [pageName]);
+    if (!isMounted) {
+      const canShowSearch = pagesCanShowSearch.includes(pageName);
+      setIsSearchVisible(canShowSearch);
+      setIsMounted(true);
+    }
+  }, [isMounted, pageName]);
 
   return (
     <Container as="header" fluid className="header pt-2 pb-2">
@@ -46,7 +36,7 @@ export default function Header() {
           </Link>
         </Col>
         <Col xs lg={ 8 } className="text-center">
-          <h2 data-testid="page-title" className="header-title">{treatedPageName}</h2>
+          <h2 data-testid="page-title" className="header-title">{pageName}</h2>
         </Col>
         <Col className="text-center">
           {(isSearchVisible) && (
@@ -69,3 +59,7 @@ export default function Header() {
     </Container>
   );
 }
+
+Header.propTypes = {
+  pageName: PropTypes.string.isRequired,
+};

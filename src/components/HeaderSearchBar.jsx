@@ -1,14 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+// Removido Collapse pois estava quebrando os testes
+// import { Collapse } from 'react-bootstrap';
 import mainContext from '../contexts/mainContext';
 
 export default function HeaderSearchBar(props) {
   const { isVisible } = props;
-  const {
-    recipesBy,
-    setRecipesBy,
-    requestRecipes,
-  } = useContext(mainContext);
+  const { setRecipesBy } = useContext(mainContext);
 
   const [inputSearch, setInputSearch] = useState('');
   const [radioValue, setRadioValue] = useState('');
@@ -23,11 +21,7 @@ export default function HeaderSearchBar(props) {
     setRecipesBy({ searchType: radioValue, searchInput: inputSearch });
   };
 
-  useEffect(() => {
-    requestRecipes();
-  }, [recipesBy]);
-
-  return (isVisible) && (
+  return isVisible && (
     <form
       onSubmit={ handleSubmit }
     >

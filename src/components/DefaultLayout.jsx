@@ -4,42 +4,52 @@ import Footer from './Footer';
 import '../styles/Footer.css';
 import '../styles/Header.css';
 import Header from './Header';
-import { getPageName } from '../helpers';
+import { treatPathname } from '../helpers';
 import mainContext from '../contexts/mainContext';
 
-export default function DefaultLayout({ children, pathname = '' }) {
-  const { setPageName, setRecipesType } = useContext(mainContext);
+export default function DefaultLayout({ children, pathname = '', hideAll }) {
+  const pageName = treatPathname(pathname);
+  const { setRecipesType, setIdType } = useContext(mainContext);
+
   const [isFooterVisible, setIsFooterVisible] = useState(true);
 
   useEffect(() => {
-    getPageName(pathname, setPageName);
-
     if (pathname.includes('comida')) {
       setRecipesType('meals');
+      setIdType('Meal');
     }
-
     if (pathname.includes('bebida')) {
       setRecipesType('drinks');
+      setIdType('Drink');
     }
 
-    const routesToHideFooter = ['receitas-feitas', 'receitas-favoritas'];
-    if (routesToHideFooter.includes(pathname)) {
+    const routesToHideFooter = [
+      'Receitas Feitas',
+      'Receitas Favoritas',
+    ];
+
+    if (routesToHideFooter.includes(pageName)) {
       setIsFooterVisible(false);
     }
-  }, [pathname, setPageName, setRecipesType]);
+  }, [pathname, setRecipesType, setIdType, pageName]);
 
   return (
     <>
-      <Header />
+      {!hideAll && <Header pageName={ pageName } />}
       <main>
         {children}
       </main>
-      {(isFooterVisible) && <Footer />}
+      {isFooterVisible && !hideAll && <Footer />}
     </>
   );
 }
 
+DefaultLayout.defaultProps = {
+  hideAll: false,
+};
+
 DefaultLayout.propTypes = {
   children: PropTypes.node.isRequired,
   pathname: PropTypes.string.isRequired,
+  hideAll: PropTypes.bool,
 };
