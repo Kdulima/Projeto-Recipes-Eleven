@@ -6,7 +6,7 @@ import DetailOrInProgressRecipe from './pages/DetailOrInProgressRecipe';
 import Explore from './pages/Explore';
 import ExploreRecipes from './pages/ExploreRecipes';
 import Ingredients from './pages/Ingredients';
-import ExploreArea from './pages/ExploreArea';
+import ExploreFoodOrDrinks from './pages/ExploreFoodOrDrinks';
 import Profile from './pages/Profile';
 import DoneOrFavoriteRecipes from './pages/DoneOrFavoriteRecipes';
 
@@ -25,7 +25,7 @@ export default function Routes() {
       <Route exact path="/explorar/bebidas" component={ ExploreRecipes } />
       <Route path="/explorar/comidas/ingredientes" component={ Ingredients } />
       <Route path="/explorar/bebidas/ingredientes" component={ Ingredients } />
-      <Route path="/explorar/comidas/area" component={ ExploreArea } />
+      <Route path="/explorar/comidas/area" component={ ExploreFoodOrDrinks } />
       <Route path="/perfil" component={ Profile } />
       <Route path="/receitas-feitas" component={ DoneOrFavoriteRecipes } />
       <Route path="/receitas-favoritas" component={ DoneOrFavoriteRecipes } />
