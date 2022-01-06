@@ -12,7 +12,6 @@ export default function MainProvider({ children }) {
   const [isFetching, setIsFetching] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [canTryRedirect, setCanTryRedirect] = useState(true);
-
   const [categoryToFilter, setCategoryToFilter] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
@@ -97,16 +96,27 @@ export default function MainProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
-  }, [inProgressRecipes]);
+  }, [inProgressRecipes, isMounted]);
 
-  function addInProgressRecipe(id, type) {
-    setInProgressRecipes((prevState) => ({
-      ...prevState,
-      [type]: {
-        ...prevState[type],
-        [id]: [],
-      },
-    }));
+  function handleInProgressRecipe(id, progress = []) {
+    if (isMounted) {
+      const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
+      setInProgressRecipes((prevState) => ({
+        ...prevState,
+        [type]: {
+          ...prevState[type],
+          [id]: progress,
+        },
+      }));
+    }
+  }
+
+  function removeInProgressRecipe(id) {
+    const type = recipesType === 'drinks' ? 'cocktails' : 'meals';
+    setInProgressRecipes((prevState) => {
+      delete prevState[type][id];
+      return { ...prevState };
+    });
   }
 
   function handleInFavorites(recipeDetail) {
@@ -119,8 +129,10 @@ export default function MainProvider({ children }) {
   }
 
   useEffect(() => {
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-  }, [favoriteRecipes]);
+    if (isMounted) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    }
+  }, [favoriteRecipes, isMounted]);
 
   return (
     <mainContext.Provider
@@ -130,7 +142,6 @@ export default function MainProvider({ children }) {
         isMounted,
         canTryRedirect,
         doneRecipes,
-
         recipesType,
         setRecipesType,
         idType,
@@ -143,7 +154,8 @@ export default function MainProvider({ children }) {
         setFavoriteRecipes,
         handleInFavorites,
         inProgressRecipes,
-        addInProgressRecipe,
+        handleInProgressRecipe,
+        removeInProgressRecipe,
       } }
     >
       {children}
