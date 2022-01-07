@@ -1,7 +1,7 @@
 const BASE_MEALS_API_URL = 'https://www.themealdb.com/api/json/v1/1/';
 const BASE_DRINKS_API_URL = 'https://www.thecocktaildb.com/api/json/v1/1/';
-const BASE_MEALS_INGREDIENT_IMG_API_URL = 'https://www.themealdb.com/images/ingredients/';
-const BASE_DRINKS_INGREDIENT_IMG_API_URL = 'https://www.thecocktaildb.com/images/ingredients/';
+// const BASE_MEALS_INGREDIENT_IMG_API_URL = 'https://www.themealdb.com/images/ingredients/';
+// const BASE_DRINKS_INGREDIENT_IMG_API_URL = 'https://www.thecocktaildb.com/images/ingredients/';
 
 const RECIPES_BY_INGREDIENT = 'filter.php?i=';
 const RECIPES_BY_NAME = 'search.php?s=';
@@ -98,11 +98,11 @@ export const getIngredients = async (recipeType) => {
   return data[type];
 };
 
-export const getIngredientPicture = async (recipeType, ingredientName) => {
-  const linkToFetch = recipeType === 'comidas'
-    ? BASE_MEALS_INGREDIENT_IMG_API_URL
-    : BASE_DRINKS_INGREDIENT_IMG_API_URL;
-  const data = await fetch(`${linkToFetch}${ingredientName}.png`);
+// export const getIngredientPicture = async (recipeType, ingredientName) => {
+//   const linkToFetch = recipeType === 'comidas'
+//     ? BASE_MEALS_INGREDIENT_IMG_API_URL
+//     : BASE_DRINKS_INGREDIENT_IMG_API_URL;
+//   const data = await fetch(`${linkToFetch}${ingredientName}-Small.png`);
 
-  return data.url;
-};
+//   return data.url;
+// };
