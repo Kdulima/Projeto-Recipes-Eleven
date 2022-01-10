@@ -19,7 +19,7 @@ export default function ExploreArea({ history: { location: { pathname } } }) {
   useEffect(() => {
     async function fetchAreas() {
       const countries = ['All'];
-      const response = await getAreas('comidas');
+      const response = await getAreas();
       response.map((area) => countries.push(area.strArea));
 
       setAreas(countries);
@@ -32,7 +32,7 @@ export default function ExploreArea({ history: { location: { pathname } } }) {
       {(recipes.length === 1 && canTryRedirect) && (
         <Redirect
           to={
-            `${pathname}/${recipes[0][`id${idType}`]}`
+            `${recipes[0][`id${idType}`]}`
           }
         />
       )}

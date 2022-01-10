@@ -7,6 +7,7 @@ const RECIPES_BY_INGREDIENT = 'filter.php?i=';
 const RECIPES_BY_NAME = 'search.php?s=';
 const RECIPES_BY_FIRST_LETTER = 'search.php?f=';
 const RECIPES_BY_CATEGORY = 'filter.php?c=';
+const RECIPES_BY_AREA = 'filter.php?a=';
 const RECIPES_DETAIL_BY_ID = 'lookup.php?i=';
 const CATEGORIES = 'list.php?c=list';
 const INGREDIENTS = 'list.php?i=list';
@@ -98,22 +99,20 @@ export const getIngredients = async (recipeType) => {
   return data[type];
 };
 
-export const getAreas = async (recipeType) => {
-  const type = recipeType === 'comidas' ? 'meals' : 'drinks';
+export const getAreas = async () => {
+  const type = 'meals';
 
   const linkToFetch = setLinkToFetch(type);
   const data = await getApiData(`${linkToFetch}${AREA}`);
 
-  if (type === 'meals') {
-    return data.meals;
-  } return '404 Not Found';
+  return data.meals;
 };
 
-// export const getIngredientPicture = async (recipeType, ingredientName) => {
-//   const linkToFetch = recipeType === 'comidas'
-//     ? BASE_MEALS_INGREDIENT_IMG_API_URL
-//     : BASE_DRINKS_INGREDIENT_IMG_API_URL;
-//   const data = await fetch(`${linkToFetch}${ingredientName}-Small.png`);
+export const getRecipesByArea = async (area) => {
+  const type = 'meals';
 
-//   return data.url;
-// };
+  const linkToFetch = setLinkToFetch(type);
+  const data = await getApiData(`${linkToFetch}${RECIPES_BY_AREA}${area}`);
+
+  return data.meals;
+};

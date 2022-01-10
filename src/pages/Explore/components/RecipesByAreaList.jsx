@@ -1,27 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import mainContext from '../../../contexts/mainContext';
-import RecipeCard from '../../List/components/RecipeCard';
+import RecipeCardByArea from './RecipeCardByArea';
 
 const RECIPES_TO_SHOW = 12;
 
 const RecipesByAreaList = () => {
-  const { recipes, areaSelected } = useContext(mainContext);
-  const [response, setResponse] = useState(recipes);
+  const { recipes } = useContext(mainContext);
 
-  useEffect(() => {
-    function getRecipesCards() {
-      if (areaSelected === 'All') {
-        setResponse(recipes);
-      } else {
-        setResponse(recipes.filter((recipe) => recipe.strArea === areaSelected));
-      }
-    }
-    getRecipesCards();
-  }, [areaSelected, recipes]);
-
-  return response.map((recipe, index) => (
+  return recipes.map((recipe, index) => (
     index < RECIPES_TO_SHOW ? (
-      <RecipeCard
+      <RecipeCardByArea
         key={ index }
         index={ index }
         recipe={ recipe }

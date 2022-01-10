@@ -6,6 +6,7 @@ import {
   getRecipesByIngredient,
   getRecipesByName,
   getRecipesByCategory,
+  getRecipesByArea,
 } from '../services/recipesAPI';
 
 export default function MainProvider({ children }) {
@@ -134,6 +135,19 @@ export default function MainProvider({ children }) {
       localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
     }
   }, [favoriteRecipes, isMounted]);
+
+  useEffect(() => {
+    async function getRecipesCards() {
+      if (areaSelected === 'All') {
+        const response = await getRecipesByName('', 'meals');
+        setRecipes(response);
+      } else {
+        const response = await getRecipesByArea(areaSelected);
+        setRecipes(response);
+      }
+    }
+    getRecipesCards();
+  }, [areaSelected]);
 
   return (
     <mainContext.Provider
