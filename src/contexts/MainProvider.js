@@ -23,6 +23,7 @@ export default function MainProvider({ children }) {
   const [recipesBy, setRecipesBy] = useState({
     searchInput: '', searchType: 'name',
   });
+  const [areaSelected, setAreaSelected] = useState('All');
 
   useEffect(() => setIsMounted(true), []);
 
@@ -143,19 +144,21 @@ export default function MainProvider({ children }) {
         canTryRedirect,
         doneRecipes,
         recipesType,
-        setRecipesType,
         idType,
-        setIdType,
         recipesBy,
-        setRecipesBy,
         categoryToFilter,
-        setCategoryToFilter,
         favoriteRecipes,
+        inProgressRecipes,
+        areaSelected,
+        setRecipesType,
+        setIdType,
+        setRecipesBy,
+        setCategoryToFilter,
         setFavoriteRecipes,
         handleInFavorites,
-        inProgressRecipes,
         handleInProgressRecipe,
         removeInProgressRecipe,
+        setAreaSelected,
       } }
     >
       {children}

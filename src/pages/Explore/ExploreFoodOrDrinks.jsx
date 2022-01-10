@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import DefaultLayout from '../components/DefaultLayout';
-import { getRandomRecipeId } from '../services/recipesAPI';
+import DefaultLayout from '../../components/DefaultLayout';
+import { getRandomRecipeId } from '../../services/recipesAPI';
+import mainContext from '../../contexts/mainContext';
 
 export default function ExploreFoodOrDrinks(props) {
   const { history: { push, location: { pathname } } } = props;
+  const { setRecipesBy } = useContext(mainContext);
 
   const foodOrDrinks = pathname.includes('comidas') ? 'comidas' : 'bebidas';
   return (
@@ -21,7 +23,10 @@ export default function ExploreFoodOrDrinks(props) {
         <button
           type="button"
           data-testid="explore-by-area"
-          onClick={ () => push('comidas/area') }
+          onClick={ () => {
+            push('comidas/area');
+            setRecipesBy({ searchInput: '', searchType: 'area' });
+          } }
         >
           Por Local de Origem
         </button>

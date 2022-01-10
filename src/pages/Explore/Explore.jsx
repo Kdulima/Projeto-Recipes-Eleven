@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DefaultLayout from '../components/DefaultLayout';
+import DefaultLayout from '../../components/DefaultLayout';
 
 export default function Explore({ history }) {
   return (
