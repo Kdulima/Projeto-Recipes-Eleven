@@ -10,6 +10,7 @@ import ExploreFoodOrDrinks from './pages/Explore/ExploreFoodOrDrinks';
 import Profile from './pages/Profile';
 import DoneOrFavoriteRecipes from './pages/DoneOrFavoriteRecipes';
 import ExploreArea from './pages/Explore/ExploreArea';
+import NotFound from './pages/NotFound';
 
 export default function Routes() {
   return (
@@ -30,6 +31,7 @@ export default function Routes() {
       <Route path="/perfil" component={ Profile } />
       <Route path="/receitas-feitas" component={ DoneOrFavoriteRecipes } />
       <Route path="/receitas-favoritas" component={ DoneOrFavoriteRecipes } />
+      <Route path="*" component={ NotFound } />
     </Switch>
   );
 }
