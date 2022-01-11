@@ -8,35 +8,23 @@ export default function IngredientCard({ index, ingredient }) {
   const { recipesType, setRecipesBy } = useContext(mainContext);
   const type = recipesType === 'meals' ? 'themeal' : 'thecocktail';
 
-  // const [picture, setPicture] = useState('');
-
-  // useEffect(() => {
-  //   async function fetchPicture() {
-  //     const response = await getIngredientPicture(type, ingredient);
-  //     setPicture(response);
-  //   }
-  //   fetchPicture();
-  // }, [type, ingredient]);
-
   return (
-    (
-      <Link
-        data-testid={ `${index}-ingredient-card` }
-        to={
-          type === 'themeal' ? '/comidas' : '/bebidas'
-        }
-        onClick={
-          () => setRecipesBy({ searchInput: ingredient, searchType: 'ingredient' })
-        }
-      >
-        <img
-          data-testid={ `${index}-card-img` }
-          src={ `https://www.${type}db.com/images/ingredients/${ingredient}-Small.png` }
-          alt={ ingredient }
-        />
-        <p data-testid={ `${index}-card-name` }>{ ingredient }</p>
-      </Link>
-    )
+    <Link
+      data-testid={ `${index}-ingredient-card` }
+      to={
+        type === 'themeal' ? '/comidas' : '/bebidas'
+      }
+      onClick={
+        () => setRecipesBy({ searchInput: ingredient, searchType: 'ingredient' })
+      }
+    >
+      <img
+        data-testid={ `${index}-card-img` }
+        src={ `https://www.${type}db.com/images/ingredients/${ingredient}-Small.png` }
+        alt={ ingredient }
+      />
+      <p data-testid={ `${index}-card-name` }>{ ingredient }</p>
+    </Link>
   );
 }
 

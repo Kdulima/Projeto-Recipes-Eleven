@@ -21,21 +21,20 @@ export default function Ingredients({ location: { pathname } }) {
     fetchIngredients();
   }, [foodOrDrink.typeName]);
 
-  return (
-    ingredients.length > 0 && (
-      <DefaultLayout pathname={ pathname }>
-        <div>
-          { ingredients.map((ingredient, index) => (
-            index < maxCardAmount
-            && <IngredientCard
-              key={ index }
-              index={ index }
-              ingredient={ ingredient[foodOrDrink.keyType] }
-            />
-          ))}
-        </div>
-      </DefaultLayout>
-    ));
+  return ingredients.length > 0 && (
+    <DefaultLayout pathname={ pathname }>
+      <div>
+        { ingredients.map((ingredient, index) => (
+          index < maxCardAmount
+          && <IngredientCard
+            key={ index }
+            index={ index }
+            ingredient={ ingredient[foodOrDrink.keyType] }
+          />
+        ))}
+      </div>
+    </DefaultLayout>
+  );
 }
 
 Ingredients.propTypes = {

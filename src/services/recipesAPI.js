@@ -1,7 +1,5 @@
 const BASE_MEALS_API_URL = 'https://www.themealdb.com/api/json/v1/1/';
 const BASE_DRINKS_API_URL = 'https://www.thecocktaildb.com/api/json/v1/1/';
-// const BASE_MEALS_INGREDIENT_IMG_API_URL = 'https://www.themealdb.com/images/ingredients/';
-// const BASE_DRINKS_INGREDIENT_IMG_API_URL = 'https://www.thecocktaildb.com/images/ingredients/';
 
 const RECIPES_BY_INGREDIENT = 'filter.php?i=';
 const RECIPES_BY_NAME = 'search.php?s=';
@@ -100,18 +98,14 @@ export const getIngredients = async (recipeType) => {
 };
 
 export const getAreas = async () => {
-  const type = 'meals';
-
-  const linkToFetch = setLinkToFetch(type);
+  const linkToFetch = setLinkToFetch('meals');
   const data = await getApiData(`${linkToFetch}${AREA}`);
 
   return data.meals;
 };
 
 export const getRecipesByArea = async (area) => {
-  const type = 'meals';
-
-  const linkToFetch = setLinkToFetch(type);
+  const linkToFetch = setLinkToFetch('meals');
   const data = await getApiData(`${linkToFetch}${RECIPES_BY_AREA}${area}`);
 
   return data.meals;

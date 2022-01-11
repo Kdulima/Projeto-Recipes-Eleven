@@ -2,13 +2,11 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import mainContext from '../../../contexts/mainContext';
 
-const RECIPES_TO_SHOW = 12;
-
 const RecipesList = () => {
   const { recipes, recipesType } = useContext(mainContext);
   const pathDetails = recipesType === 'meals' ? 'comidas' : 'bebidas';
-  console.log(pathDetails);
   const type = recipesType === 'meals' ? 'Meal' : 'Drink';
+  const RECIPES_TO_SHOW = 12;
 
   return recipes.map((recipe, index) => (
     index < RECIPES_TO_SHOW ? (

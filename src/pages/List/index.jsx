@@ -19,7 +19,6 @@ export default function List({ history: { location: { pathname } } }) {
   } = useContext(mainContext);
 
   const isInExplorArea = pathname.includes('area');
-
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
