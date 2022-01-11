@@ -1,15 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import List from './pages/List/index';
+import List from './pages/List';
 import Login from './pages/Login';
 import DetailOrInProgressRecipe from './pages/DetailOrInProgressRecipe';
-import Explore from './pages/Explore/Explore';
-// import ExploreRecipes from './pages/ExploreRecipes';
+import Explore from './pages/Explore';
 import Ingredients from './pages/Ingredients';
-import ExploreFoodOrDrinks from './pages/Explore/ExploreFoodOrDrinks';
+import ExploreFoodOrDrinks from './pages/ExploreFoodOrDrinks';
 import Profile from './pages/Profile';
 import DoneOrFavoriteRecipes from './pages/DoneOrFavoriteRecipes';
-import ExploreArea from './pages/Explore/ExploreArea';
 import NotFound from './pages/NotFound';
 
 export default function Routes() {
@@ -27,7 +25,7 @@ export default function Routes() {
       <Route exact path="/explorar/bebidas" component={ ExploreFoodOrDrinks } />
       <Route path="/explorar/comidas/ingredientes" component={ Ingredients } />
       <Route path="/explorar/bebidas/ingredientes" component={ Ingredients } />
-      <Route path="/explorar/comidas/area" component={ ExploreArea } />
+      <Route path="/explorar/comidas/area" component={ List } />
       <Route path="/perfil" component={ Profile } />
       <Route path="/receitas-feitas" component={ DoneOrFavoriteRecipes } />
       <Route path="/receitas-favoritas" component={ DoneOrFavoriteRecipes } />

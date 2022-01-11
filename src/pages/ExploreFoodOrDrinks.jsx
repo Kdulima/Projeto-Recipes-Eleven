@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import DefaultLayout from '../../components/DefaultLayout';
-import { getRandomRecipeId } from '../../services/recipesAPI';
-import mainContext from '../../contexts/mainContext';
+import DefaultLayout from '../components/DefaultLayout';
+import { getRandomRecipeId } from '../services/recipesAPI';
+import mainContext from '../contexts/mainContext';
 
 export default function ExploreFoodOrDrinks(props) {
   const { history: { push, location: { pathname } } } = props;
