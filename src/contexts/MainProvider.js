@@ -6,6 +6,7 @@ import {
   getRecipesByIngredient,
   getRecipesByName,
   getRecipesByCategory,
+  getRecipesByArea,
 } from '../services/recipesAPI';
 
 export default function MainProvider({ children }) {
@@ -23,6 +24,7 @@ export default function MainProvider({ children }) {
   const [recipesBy, setRecipesBy] = useState({
     searchInput: '', searchType: 'name',
   });
+  const [areaSelected, setAreaSelected] = useState('All');
 
   useEffect(() => setIsMounted(true), []);
 
@@ -134,6 +136,19 @@ export default function MainProvider({ children }) {
     }
   }, [favoriteRecipes, isMounted]);
 
+  useEffect(() => {
+    async function getRecipesCards() {
+      if (areaSelected === 'All') {
+        const response = await getRecipesByName('', 'meals');
+        setRecipes(response);
+      } else {
+        const response = await getRecipesByArea(areaSelected);
+        setRecipes(response);
+      }
+    }
+    getRecipesCards();
+  }, [areaSelected]);
+
   return (
     <mainContext.Provider
       value={ {
@@ -143,19 +158,21 @@ export default function MainProvider({ children }) {
         canTryRedirect,
         doneRecipes,
         recipesType,
-        setRecipesType,
         idType,
-        setIdType,
         recipesBy,
-        setRecipesBy,
         categoryToFilter,
-        setCategoryToFilter,
         favoriteRecipes,
+        inProgressRecipes,
+        areaSelected,
+        setRecipesType,
+        setIdType,
+        setRecipesBy,
+        setCategoryToFilter,
         setFavoriteRecipes,
         handleInFavorites,
-        inProgressRecipes,
         handleInProgressRecipe,
         removeInProgressRecipe,
+        setAreaSelected,
       } }
     >
       {children}

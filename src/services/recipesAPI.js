@@ -5,8 +5,12 @@ const RECIPES_BY_INGREDIENT = 'filter.php?i=';
 const RECIPES_BY_NAME = 'search.php?s=';
 const RECIPES_BY_FIRST_LETTER = 'search.php?f=';
 const RECIPES_BY_CATEGORY = 'filter.php?c=';
+const RECIPES_BY_AREA = 'filter.php?a=';
 const RECIPES_DETAIL_BY_ID = 'lookup.php?i=';
-const RECIPES_CATEGORIES = 'list.php?c=list';
+const CATEGORIES = 'list.php?c=list';
+const INGREDIENTS = 'list.php?i=list';
+const AREA = 'list.php?a=list';
+const RANDOM_RECIPE = 'random.php';
 
 const setLinkToFetch = (recipeType) => {
   let linkToFetch = null;
@@ -68,7 +72,41 @@ export const getRecipeDetails = async (recipeId, recipeType) => {
 
 export const getRecipeCategories = async (recipeType) => {
   const linkToFetch = setLinkToFetch(recipeType);
-  const data = await getApiData(`${linkToFetch}${RECIPES_CATEGORIES}`);
+  const data = await getApiData(`${linkToFetch}${CATEGORIES}`);
 
   return data[recipeType];
+};
+
+export const getRandomRecipeId = async (recipeType) => {
+  const type = recipeType === 'comidas'
+    ? { id: 'idMeal', name: 'meals' }
+    : { id: 'idDrink', name: 'drinks' };
+
+  const linkToFetch = setLinkToFetch(type.name);
+  const data = await getApiData(`${linkToFetch}${RANDOM_RECIPE}`);
+
+  return data[type.name][0][type.id];
+};
+
+export const getIngredients = async (recipeType) => {
+  const type = recipeType === 'comidas' ? 'meals' : 'drinks';
+
+  const linkToFetch = setLinkToFetch(type);
+  const data = await getApiData(`${linkToFetch}${INGREDIENTS}`);
+
+  return data[type];
+};
+
+export const getAreas = async () => {
+  const linkToFetch = setLinkToFetch('meals');
+  const data = await getApiData(`${linkToFetch}${AREA}`);
+
+  return data.meals;
+};
+
+export const getRecipesByArea = async (area) => {
+  const linkToFetch = setLinkToFetch('meals');
+  const data = await getApiData(`${linkToFetch}${RECIPES_BY_AREA}${area}`);
+
+  return data.meals;
 };
