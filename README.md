@@ -1,5 +1,5 @@
 # Recipes Eleven
-### Para conferir a aplicação em funcionamento, acesse: 
+### Para conferir a aplicação em funcionamento, acesse: https://recipeseleven.vercel.app/
 
 > Recipes Eleven é uma aplicação web responsiva feita para a finalização do Módulo de Front-end da **[Trybe](https://www.betrybe.com/)**. Nessa aplicação o usuário pode pesquisar receitas e drinks. É possível iniciar, favoritar e  compartilhar receitas e drinks com os amigos por um link e até ver um vídeo demonstrativo de como fazer a receita.
 
@@ -30,6 +30,8 @@ cd Projeto-Recipes-Eleven
 npm install
 
 npm start
+
+Obs.: Uma melhor visualização pode ser feita no modo responsivo do seu navegador.
 ```
 
 ## 📫 Contribuindo para o Projeto Recipes Eleven
