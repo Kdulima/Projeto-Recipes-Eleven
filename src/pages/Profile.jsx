@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState, useContext } from 'react';
+import { Button } from 'react-bootstrap';
 import DefaultLayout from '../components/DefaultLayout';
+import './style/Profile.css';
 import mainContext from '../contexts/mainContext';
 
 export default function Profile({ history }) {
@@ -17,21 +19,24 @@ export default function Profile({ history }) {
   return isMounted && (
     <DefaultLayout pathname="/perfil">
       <p data-testid="profile-email">{user}</p>
-      <button
+      <Button
+        variant="outline-danger"
         type="button"
         data-testid="profile-done-btn"
         onClick={ () => history.push('/receitas-feitas') }
       >
         Receitas Feitas
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="outline-danger"
         type="button"
         data-testid="profile-favorite-btn"
         onClick={ () => history.push('/receitas-favoritas') }
       >
         Receitas Favoritas
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="outline-danger"
         type="button"
         data-testid="profile-logout-btn"
         onClick={ () => {
@@ -40,7 +45,7 @@ export default function Profile({ history }) {
         } }
       >
         Sair
-      </button>
+      </Button>
     </DefaultLayout>
   );
 }

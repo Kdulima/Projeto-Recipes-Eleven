@@ -1,0 +1,27 @@
+.recipes-card {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-shadow: 0 0 13px rgb(250, 85, 88);
+  margin: auto;
+  margin-top: 15px;
+  text-align: center;
+  width: 250px;
+}
+
+.recipes-card img {
+  border-radius: 50%;
+  box-shadow: 0 15px 8px rgb(162, 158, 158);
+  margin: 10px;
+  object-fit: cover;
+  padding: 10px;
+  width: 80%;
+}
+
+.recipes-card p {
+  border-radius: 5px;
+  color: #7c7a7a;
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 5px;
+}

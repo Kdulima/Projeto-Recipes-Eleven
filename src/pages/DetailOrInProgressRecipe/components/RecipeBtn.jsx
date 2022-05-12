@@ -44,6 +44,7 @@ export default function RecipeBtn({
     !doneRecipes.some(({ id }) => id === idURL) && (
       <div className="start-recipe-container">
         <button
+          variant="outline-danger"
           data-testid={ isInProgress ? 'finish-recipe-btn' : 'start-recipe-btn' }
           className="start-recipe-btn"
           type="button"

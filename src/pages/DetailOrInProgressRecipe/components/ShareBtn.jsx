@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import shareIcon from '../../../images/shareIcon.svg';
+import shareIcon from '../../../images/share_Icon.png';
+import './style/ShareBtn.css';
 
 export default function ShareBtn() {
   const [showShareMessage, setShowShareMessage] = useState(false);
@@ -18,6 +19,7 @@ export default function ShareBtn() {
   return (
     <>
       <button
+        className="share-icon"
         type="button"
         data-testid="share-btn"
         onClick={ copyPageUrl }

@@ -1,0 +1,16 @@
+.category-list {
+  display: flex;
+  margin: 1px;
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+.category-button {
+  background: rgb(235, 149, 149) !important;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  margin: 2px;
+  padding: 10px 17px;
+}

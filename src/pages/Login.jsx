@@ -1,8 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import '../styles/Login.css';
+import './style/Login.css';
 import { Container, Row } from 'react-bootstrap';
+import Logo from '../images/art_recipesE.png';
 
 const validateEmail = (email) => {
   // Regex retirado do site: https://regexr.com
@@ -44,7 +45,8 @@ export default function Login({ history }) {
   return (
     <>
       <header className="login-header">
-        <h1>Login</h1>
+        <img src={ Logo } alt="logo" />
+        {/* <h1>Login</h1> */}
       </header>
       <Container fluid className="form">
         <form onSubmit={ handleLogin }>

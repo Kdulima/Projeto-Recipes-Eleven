@@ -1,6 +1,7 @@
 .header {
   background: linear-gradient(165deg, rgb(255, 13, 31) 13%, rgb(255, 144, 35) 70%);
-  border-radius: 0 0 10px 10px;
+
+  /* background: rgb(255, 106, 40); */
   min-height: 2rem;
 }
 

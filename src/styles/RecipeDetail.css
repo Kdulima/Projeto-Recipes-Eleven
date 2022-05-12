@@ -7,24 +7,33 @@
 
 .recommendation-list > a {
   align-items: center;
+  color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 55vw;
+  min-width: 35vw;
 }
 
 .recommendation-list > a > img {
+  border-radius: 50%;
+  margin-bottom: 5px;
   width: 100px;
 }
 
 .start-recipe-container {
   display: flex;
   justify-content: center;
-  margin-top: 15%;
+  margin: 10px;
 }
 
 .start-recipe-btn {
   bottom: 0;
   margin: auto;
-  position: fixed;
+  background: rgb(235, 149, 149) !important;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  margin: 2px;
+  padding: 10px 17px;
 }

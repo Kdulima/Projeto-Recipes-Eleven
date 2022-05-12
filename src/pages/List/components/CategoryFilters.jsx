@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
+import './styles/CategoryFilters.css';
 import mainContext from '../../../contexts/mainContext';
 
 const AMOUNT_OF_FILTERS = 5;
@@ -12,7 +13,7 @@ export default function CategoryFilters({ categories }) {
   } = useContext(mainContext);
 
   function handleFilterSubmit(e) {
-    const filterValue = e.target.value;
+    const filterValue = e.target.innerText;
     setCategoryToFilter((prevState) => {
       if (prevState === filterValue) {
         return setRecipesBy((prevRecipesBy) => ({ ...prevRecipesBy }));
@@ -22,24 +23,26 @@ export default function CategoryFilters({ categories }) {
   }
 
   return (
-    <div>
-      <Button
-        as="input"
+    <div className="category-list">
+      <button
+        className="category-button"
         type="button"
-        value="All"
         data-testid="All-category-filter"
         onClick={ handleFilterSubmit }
-      />
+      >
+        All
+      </button>
       {categories.map((category, index) => (
         index < AMOUNT_OF_FILTERS ? (
-          <Button
+          <button
+            className="category-button"
             key={ index }
-            as="input"
             type="button"
-            value={ category.strCategory }
             onClick={ handleFilterSubmit }
             data-testid={ `${category.strCategory}-category-filter` }
-          />
+          >
+            {category.strCategory}
+          </button>
         ) : null))}
     </div>
   );

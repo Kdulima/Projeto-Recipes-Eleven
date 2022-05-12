@@ -1,0 +1,9 @@
+.favorite-btn {
+  background: rgb(255, 233, 215);
+  border: none;
+}
+
+.favorite-btn img {
+  height: 60px;
+  width: 60px;
+}

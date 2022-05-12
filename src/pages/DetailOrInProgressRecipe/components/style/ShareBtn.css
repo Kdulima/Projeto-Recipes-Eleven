@@ -1,0 +1,10 @@
+.share-icon {
+  background: rgb(255, 233, 215);
+  border: none;
+}
+
+.share-icon img {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}

@@ -1,0 +1,22 @@
+.search-input {
+  display: flex;
+  margin: 5px auto;
+}
+
+/* .btn-search {
+  background: white !important;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  margin-left: 10px;
+} */
+
+.search-bar {
+  display: flex;
+  margin: 5px auto 0;
+}
+
+.search-bar label {
+  margin-bottom: 0;
+  padding: 0 10px;
+}

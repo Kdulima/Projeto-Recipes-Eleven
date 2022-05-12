@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import mainContext from '../../../contexts/mainContext';
+import './styles/RecipesCard.css';
 
 const RecipesList = () => {
   const { recipes, recipesType } = useContext(mainContext);
@@ -11,8 +12,8 @@ const RecipesList = () => {
   return recipes.map((recipe, index) => (
     index < RECIPES_TO_SHOW ? (
       <div
+        className="recipes-card"
         key={ index }
-        style={ { width: '40%' } }
         data-testid={ `${index}-recipe-card` }
       >
         <Link to={ `/${pathDetails}/${recipe[`id${type}`]}` }>

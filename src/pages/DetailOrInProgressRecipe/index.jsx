@@ -10,6 +10,7 @@ import FavoriteBtn from '../../components/FavoriteBtn';
 import RecipeBtn from './components/RecipeBtn';
 import ShareBtn from './components/ShareBtn';
 import '../../styles/RecipeDetail.css';
+import './index.css';
 
 const getIngredients = (recipeDetail) => {
   const allKeys = Object.keys(recipeDetail);
@@ -68,29 +69,32 @@ export default function DetailOrInProgressRecipe({ match, location, history }) {
   return (
     isMounted && (
       <DefaultLayout pathname={ location.pathname } hideAll>
-
-        <img
-          data-testid="recipe-photo"
-          width="200"
-          src={ recipePhoto }
-          alt={ recipeTitle }
-        />
-        <p data-testid="recipe-title">{recipeTitle}</p>
-
-        <ShareBtn />
-        <FavoriteBtn
-          idURL={ idURL }
-          recipe={ {
-            id: idURL,
-            type: recipesType === 'drinks' ? 'bebida' : 'comida',
-            area: strArea || '',
-            category: strCategory,
-            alcoholicOrNot: strAlcoholic || '',
-            name: recipeTitle,
-            image: recipePhoto,
-          } }
-          testid="favorite-btn"
-        />
+        <div className="recipes-card">
+          <img
+            className="recipe-photo"
+            data-testid="recipe-photo"
+            width="200"
+            src={ recipePhoto }
+            alt={ recipeTitle }
+          />
+          <p className="recipe-title" data-testid="recipe-title">{recipeTitle}</p>
+        </div>
+        <div className="recipe-buttons">
+          <ShareBtn />
+          <FavoriteBtn
+            idURL={ idURL }
+            recipe={ {
+              id: idURL,
+              type: recipesType === 'drinks' ? 'bebida' : 'comida',
+              area: strArea || '',
+              category: strCategory,
+              alcoholicOrNot: strAlcoholic || '',
+              name: recipeTitle,
+              image: recipePhoto,
+            } }
+            testid="favorite-btn"
+          />
+        </div>
 
         <p data-testid="recipe-category">
           {`${strCategory} ${strAlcoholic || ''}`}
@@ -110,7 +114,12 @@ export default function DetailOrInProgressRecipe({ match, location, history }) {
           />
         </div>
 
-        <p data-testid="instructions">{strInstructions}</p>
+        <p
+          className="paragraph-instructions"
+          data-testid="instructions"
+        >
+          {strInstructions}
+        </p>
 
         {strYoutube && (
           <RecipeVideo

@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import mainContext from '../contexts/mainContext';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/favorite_Icon_white.png';
+import blackHeartIcon from '../images/favorite_Icon_red.png';
+import '../styles/FavoriteBtn.css';
 
 export default function FavoriteBtn({ idURL, recipe, testid }) {
   const { favoriteRecipes, handleInFavorites } = useContext(mainContext);
   return (
     <button
+      className="favorite-btn"
       type="button"
       data-testid={ testid }
       onClick={ () => handleInFavorites(recipe) }

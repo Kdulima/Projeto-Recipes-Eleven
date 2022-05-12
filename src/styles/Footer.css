@@ -5,3 +5,19 @@
   box-shadow: 0 -3px 8px rgb(206, 206, 206);
   position: fixed;
 }
+
+.drink-icon img {
+  height: 50px;
+  width: 50px;
+}
+
+.meal-icon img {
+  height: 50px;
+  width: 50px;
+}
+
+.explore-icon img {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import mainContext from '../../../contexts/mainContext';
+import './style/IngredientList.css';
 
 export default function IngredientsList({ id, recipeDetail, ingredients, isInProgress }) {
   const {
@@ -29,6 +30,7 @@ export default function IngredientsList({ id, recipeDetail, ingredients, isInPro
 
   return ingredients.map((ingredient, index) => (
     <label
+      className="xablau"
       key={ ingredient }
       htmlFor={ `${index}-ingredient-step` }
       data-testid={
